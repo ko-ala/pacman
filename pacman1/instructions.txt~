@@ -1,0 +1,32 @@
+Take the attached file:
+
+pacman.zip
+
+and download it into your Informatics/NMS account.
+
+YOu should just be able to run this with:
+
+python pacman.py
+
+which should provide you with a version of the classic arcade game which you can play using the arrow keys on your keyboard.
+
+If there is no access to python on your machine (it should be in /usr/bin/python), then you will need to install it. YOu can do that with the attached install-anaconda.sh script as follows:
+
+chmod + x install-anaconda.sh
+./install-anaconda.sh
+
+(and then wait for a few minutes)
+
+Once you have gotten tired of playing Pacman, you can run some code to control it. Running:
+
+python pacman.py --pacman RandomAgent
+
+runs the code in RandomAgent (from SampleAgents) --- this just makes action choies at random (hence the name). 
+
+RandomishAgent illustrates some other elements that your code could make use of.
+
+Note that both decide what to do, and then make a call to api.makeMove(). Looking at this (in api.py) you will see that the funciton does nothing for now. Later versions of api.py will not provide such deterministic action.
+
+Now run SensingAgent. This does not move, but instead reports data on where various items are.
+
+Write your own BasicAgent which uses the location of Pacman and the ghosts to stay alive as long as possible.
