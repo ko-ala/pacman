@@ -131,6 +131,7 @@ class CornerSeekingAgent(Agent):
     def initialize(self, state):
 
         corners = api.corners(state)
+        walls = api.walls(state)
 
         if self.map == None:
             width = 0
@@ -149,8 +150,8 @@ class CornerSeekingAgent(Agent):
 
     def getAction(self, state):
 
-        if self.init:
-            initialize(self, state)
+        if not self.init:
+            self.initialize(state)
 
         pacman = api.whereAmI(state)
         x = pacman[0]
@@ -164,12 +165,12 @@ class CornerSeekingAgent(Agent):
 
         walls = api.walls(state)
 
-        print walls
+        #print walls
 
         q = Queue.Queue()
 
         #print self.map
-        print "start search"
+        #print "start search"
 
         if Directions.STOP in legal:
             legal.remove(Directions.STOP)
@@ -206,4 +207,6 @@ class CornerSeekingAgent(Agent):
                         q.put(((x,y-1), possible[1]))
         else:
             print "cant see food"
+            for row in self.map:
+                print row
             return api.makeMove(Directions.STOP, legal)
