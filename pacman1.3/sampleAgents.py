@@ -32,7 +32,7 @@ import api
 import random
 import game
 import util
-import Queue
+from copy import copy, deepcopy
 
 # RandomAgent
 #
@@ -131,10 +131,17 @@ class CornerSeekingAgent(Agent):
 
     def initialize(self, state):
 
-        corners = api.corners(state)
-        walls = api.walls(state)
+        # get location of all visible food
         foods = api.food(state)
+        #get location of all corners
+        corners = api.corners(state)
+        #get location of all visible capsules
         capsules = api.capsules(state)
+        # Get the actions we can try, and remove "STOP" if that is one of them.
+        legal = api.legalActions(state)
+        #get location of all visible walls
+        walls = api.walls(state)
+        #get pacmans position
         pacman = api.whereAmI(state)
         x = pacman[0]
         y = pacman[1]
@@ -164,17 +171,23 @@ class CornerSeekingAgent(Agent):
         if not self.init:
             self.initialize(state)
 
+        # Get the actions we can try, and remove "STOP" if that is one of them.
+        legal = api.legalActions(state)
+
+        if len(self.route) != 0 and len(self.path) != 0:
+            print "next move"
+            nextPosition = self.route.pop(0)
+            nextMove = self.path.pop(0)
+            print nextPosition
+            print nextMove
+            self.map[nextPosition[0]][nextPosition[1]] = "0"
+            return api.makeMove(nextMove, legal)
+
+        #get pacmans position
         pacman = api.whereAmI(state)
         x = pacman[0]
         y = pacman[1]
-        # get location of all visible food
-        food = api.food(state)
-        #get location of all visible capsules
-        capsules = api.capsules(state)
-        # Get the actions we can try, and remove "STOP" if that is one of them.
-        legal = api.legalActions(state)
-        #get location of all visible walls
-        walls = api.walls(state)
+
         #initialize the queue for a Depth First Seach
         dfsQueue = []
         #remove the stop from pacman
@@ -186,7 +199,6 @@ class CornerSeekingAgent(Agent):
         print legal
 
         if Directions.WEST in legal:
-            print "west"
             nextPosition = (x-1, y)
             route = [nextPosition]
             #route.append(nextPosition)
@@ -194,7 +206,6 @@ class CornerSeekingAgent(Agent):
             #path.append(Directions.WEST)
             dfsQueue.append((nextPosition, route, path))
         if Directions.EAST in legal:
-            print "east"
             nextPosition = (x+1, y)
             route = [nextPosition]
             #route.append(nextPosition)
@@ -202,7 +213,6 @@ class CornerSeekingAgent(Agent):
             #path.append(Directions.EAST)
             dfsQueue.append((nextPosition, route, path))
         if Directions.NORTH in legal:
-            print "north"
             nextPosition = (x, y+1)
             route = [nextPosition]
             #route.append(nextPosition)
@@ -210,7 +220,6 @@ class CornerSeekingAgent(Agent):
             #path.append(Directions.NORTH)
             dfsQueue.append((nextPosition, route, path))
         if Directions.SOUTH in legal:
-            print "south"
             nextPosition = (x, y-1)
             route = [nextPosition]
             #route.append(nextPosition)
@@ -219,6 +228,8 @@ class CornerSeekingAgent(Agent):
             dfsQueue.append((nextPosition, route, path))
 
         print dfsQueue
+
+        copyMap = deepcopy(self.map)
 
         while not len(dfsQueue) == 0:
             nextPossible = dfsQueue.pop(0)
@@ -244,72 +255,44 @@ class CornerSeekingAgent(Agent):
                 return api.makeMove(nextMove, legal)
 
             else:
+                possibleMoves = [((x-1,y),Directions.WEST), ((x+1,y), Directions.EAST), ((x,y+1), Directions.NORTH),((x,y-1), Directions.SOUTH)]
                 print "searching dfs"
-                if self.map[x-1][y] != "W":
-                    print "west"
-                    position = (x-1,y)
-                    route = nextPossible[1]
-                    path = nextPossible[2]
-                    route.append(position)
-                    path.append(Directions.WEST)
-                    dfsQueue.append((position, route, path))
-                    print len(dfsQueue)
-                if self.map[x+1][y] != "W":
-                    print "east"
-                    position = (x+1,y)
-                    route = nextPossible[1]
-                    path = nextPossible[2]
-                    route.append(position)
-                    path.append(Directions.EAST)
-                    dfsQueue.append((position, route, path))
-                    print len(dfsQueue)
-                if self.map[x][y+1] != "W":
-                    print "north"
-                    position = (x,y+1)
-                    route = nextPossible[1]
-                    path = nextPossible[2]
-                    route.append(position)
-                    path.append(Directions.NORTH)
-                    dfsQueue.append((position, route, path))
-                    print len(dfsQueue)
-                if self.map[x][y-1] != "W":
-                    print "south"
-                    position = (x,y-1)
-                    route = nextPossible[1]
-                    path = nextPossible[2]
-                    route.append(position)
-                    path.append(Directions.SOUTH)
-                    dfsQueue.append((position, route, path))
-                    print len(dfsQueue)
+                for move in possibleMoves:
+                    possibleX = move[0][0]
+                    possibleY = move[0][1]
+                    if self.map[possibleX][possibleY] != "W" and copyMap[possibleX][possibleY] != "X":
+                        print move[1]
+                        copyMap[x-1][y] = "X"
+                        route = nextPossible[1]
+                        path = nextPossible[2]
+                        route.append(move[0])
+                        path.append(move[1])
+                        dfsQueue.append((move[0], route, path))
+                #if self.map[x+1][y] != "W" and copyMap[x+1][y] != "X":
+                #    print "east"
+                #    position = (x+1,y)
+                #    copyMap[x+1][y] = "X"
+                #    route = nextPossible[1]
+                #    path = nextPossible[2]
+                #    route.append(position)
+                #    path.append(Directions.EAST)
+                #    dfsQueue.append((position, route, path))
+                #if self.map[x][y+1] != "W" and copyMap[x][y+1] != "X":
+                #    print "north"
+                #    position = (x,y+1)
+                #    copyMap[x][y+1] = "X"
+                #    route = nextPossible[1]
+                #    path = nextPossible[2]
+                #    route.append(position)
+                #    path.append(Directions.NORTH)
+                #    dfsQueue.append((position, route, path))
+                #if self.map[x][y-1] != "W" and copyMap[x][y-1] != "X":
+                #    print "south"
+                #    position = (x,y-1)
+                #    copyMap[x][y-1] = "X"
+                #    route = nextPossible[1]
+                #    path = nextPossible[2]
+                #    route.append(position)
+                #    path.append(Directions.SOUTH)
+                #    dfsQueue.append((position, route, path))
         print "no move"
-
-
-        #pick = random.choice(legal)
-        #return api.makeMove(pick, legal)
-        #if not (len(food) == 0 and len(capsules) == 0):
-        #    while not dfsQueue.empty():
-        #        possible = dfsQueue.pop()
-        #        position = possible[0]
-        #        x = position[0]
-        #        y = position[1]
-        #        print position
-        #        if position in (food or capsules):
-        #            print "moving"
-        #            #self.traversed.append(position)
-        #            return api.makeMove(possible[1], legal)
-        #        else:
-        #            #print "searching"
-        #            if (x-1,y) not in (walls or self.traversed):
-        #                dfsQueue.append(((x-1,y), possible[1]))
-        #            if (x+1,y) not in (walls or self.traversed):
-        #                dfsQueue.append(((x+1,y), possible[1]))
-        #            if (x,y+1) not in (walls or self.traversed):
-        #                dfsQueue.append(((x,y+1), possible[1]))
-        #            if (x,y-1) not in (walls or self.traversed):
-        #                dfsQueue.append(((x,y-1), possible[1]))
-        #else:
-        #    print "cant see food"
-        #    for row in self.map:
-        #        print row
-        #    pick = random.choice(legal)
-        #    return api.makeMove(pick, legal)
