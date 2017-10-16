@@ -209,4 +209,5 @@ class CornerSeekingAgent(Agent):
             print "cant see food"
             for row in self.map:
                 print row
-            return api.makeMove(Directions.STOP, legal)
+            pick = random.choice(legal)
+            return api.makeMove(pick, legal)
