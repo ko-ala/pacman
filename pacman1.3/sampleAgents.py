@@ -175,6 +175,12 @@ class CornerSeekingAgent(Agent):
         legal = api.legalActions(state)
 
         if len(self.route) != 0 and len(self.path) != 0:
+
+            #for num in range(len(self.route)):
+            #    print self.route[num]
+            #    print self.path[num]
+
+            print len(self.route)
             print "next move"
             nextPosition = self.route.pop(0)
             nextMove = self.path.pop(0)
@@ -198,39 +204,32 @@ class CornerSeekingAgent(Agent):
         print "(" + str(x) + "," + str(y) + ")"
         print legal
 
+
+        #searches all squares of distance 1
         if Directions.WEST in legal:
             nextPosition = (x-1, y)
             route = [nextPosition]
-            #route.append(nextPosition)
             path = [Directions.WEST]
-            #path.append(Directions.WEST)
             dfsQueue.append((nextPosition, route, path))
         if Directions.EAST in legal:
             nextPosition = (x+1, y)
             route = [nextPosition]
-            #route.append(nextPosition)
             path = [Directions.EAST]
-            #path.append(Directions.EAST)
             dfsQueue.append((nextPosition, route, path))
         if Directions.NORTH in legal:
             nextPosition = (x, y+1)
             route = [nextPosition]
-            #route.append(nextPosition)
             path = [Directions.NORTH]
-            #path.append(Directions.NORTH)
             dfsQueue.append((nextPosition, route, path))
         if Directions.SOUTH in legal:
             nextPosition = (x, y-1)
             route = [nextPosition]
-            #route.append(nextPosition)
             path = [Directions.SOUTH]
-            #path.append(Directions.SOUTH)
             dfsQueue.append((nextPosition, route, path))
-
-        print dfsQueue
 
         copyMap = deepcopy(self.map)
 
+        #conducts bfs search
         while not len(dfsQueue) == 0:
             nextPossible = dfsQueue.pop(0)
             nextPossiblePosition = nextPossible[0]
@@ -258,41 +257,18 @@ class CornerSeekingAgent(Agent):
                 possibleMoves = [((x-1,y),Directions.WEST), ((x+1,y), Directions.EAST), ((x,y+1), Directions.NORTH),((x,y-1), Directions.SOUTH)]
                 print "searching dfs"
                 for move in possibleMoves:
+                    print "move"
+                    print move
                     possibleX = move[0][0]
                     possibleY = move[0][1]
                     if self.map[possibleX][possibleY] != "W" and copyMap[possibleX][possibleY] != "X":
+                        print "path"
+                        print move[0]
                         print move[1]
-                        copyMap[x-1][y] = "X"
-                        route = nextPossible[1]
-                        path = nextPossible[2]
+                        copyMap[possibleX][possibleY] = "X"
+                        route = deepcopy(nextPossible[1])
+                        path = deepcopy(nextPossible[2])
                         route.append(move[0])
                         path.append(move[1])
                         dfsQueue.append((move[0], route, path))
-                #if self.map[x+1][y] != "W" and copyMap[x+1][y] != "X":
-                #    print "east"
-                #    position = (x+1,y)
-                #    copyMap[x+1][y] = "X"
-                #    route = nextPossible[1]
-                #    path = nextPossible[2]
-                #    route.append(position)
-                #    path.append(Directions.EAST)
-                #    dfsQueue.append((position, route, path))
-                #if self.map[x][y+1] != "W" and copyMap[x][y+1] != "X":
-                #    print "north"
-                #    position = (x,y+1)
-                #    copyMap[x][y+1] = "X"
-                #    route = nextPossible[1]
-                #    path = nextPossible[2]
-                #    route.append(position)
-                #    path.append(Directions.NORTH)
-                #    dfsQueue.append((position, route, path))
-                #if self.map[x][y-1] != "W" and copyMap[x][y-1] != "X":
-                #    print "south"
-                #    position = (x,y-1)
-                #    copyMap[x][y-1] = "X"
-                #    route = nextPossible[1]
-                #    path = nextPossible[2]
-                #    route.append(position)
-                #    path.append(Directions.SOUTH)
-                #    dfsQueue.append((position, route, path))
         print "no move"
