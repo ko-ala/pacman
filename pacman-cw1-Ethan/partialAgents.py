@@ -184,11 +184,6 @@ class PartialAgent(Agent):
 
     def getDFSQueue(self, state):
         print "getDFSQueue"
-
-        # Get the actions we can try, and remove "STOP" if that is one of them.
-        #legal = api.legalActions(state)
-        #if Directions.STOP in legal:
-        #    legal.remove(Directions.STOP)
         #get pacmans position
         pacman = api.whereAmI(state)
         x = pacman[0]
@@ -248,8 +243,6 @@ class PartialAgent(Agent):
     def runAway(self, state):
         print "runaway!"
         print api.whereAmI(state)
-        #legal = api.legalActions(state)
-        #legal.remove(Directions.STOP)
         ghosts = api.ghosts(state)
         print ghosts
 
@@ -326,7 +319,6 @@ class PartialAgent(Agent):
 
         #if pacman can detect a ghost nearby pacman needs to run away
         if api.ghosts(state):
-            #self.path = []
             return self.runAway(state)
 
         '''
