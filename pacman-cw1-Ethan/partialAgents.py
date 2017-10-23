@@ -93,7 +93,6 @@ class PartialAgent(Agent):
         #get location of all visible capsules
         capsules = api.capsules(state)
         # Get the actions we can try, and remove "STOP" if that is one of them.
-        #legal = api.legalActions(state)
         #get location of all visible walls
         walls = api.walls(state)
         #get pacmans position
@@ -111,9 +110,7 @@ class PartialAgent(Agent):
                     width = corner[0]
                 if corner[1] > height:
                     height = corner[1]
-            #print "width and height"
-            #print width
-            #print height
+
             #once the size of the map has been identified, fill it up with "?", as pacman does not know what is in there
             self.map = [["?" for y in range(height+1)] for x in range(width+1)]
             #now add in all the information pacman knows initially. starting with all known locations of food
@@ -125,13 +122,10 @@ class PartialAgent(Agent):
                 self.map[capsule[0]][capsule[1]] = "C"
             #now mark the location of the walls on the map, using "W"
             for wall in walls:
-                #print wall
                 self.map[wall[0]][wall[1]] = "W"
             #last pacman knows where it is, so mark that as "P"
             self.map[pacmanX][pacmanY] = "P"
 
-            #for row in self.map:
-            #    print row
         #set init to true as the map has been initialized
         for row in self.map:
             print row
@@ -145,25 +139,19 @@ class PartialAgent(Agent):
         #get location of all visible capsules
         capsules = api.capsules(state)
 
-        print foods
         for food in foods:
             #use "F" to mark food on the map
             self.map[food[0]][food[1]] = "F"
         #now mark the location of capsules on the map, this time using "C"
-        print capsules
         for capsule in capsules:
             self.map[capsule[0]][capsule[1]] = "C"
 
-        for row in self.map:
-            print row
+        #for row in self.map:
+        #    print row
 
 
     def checkAdjacent(self, state):
         print "checkAdjacent"
-        # Get the actions we can try, and remove "STOP" if that is one of them.
-        #legal = api.legalActions(state)
-        #if Directions.STOP in legal:
-        #    legal.remove(Directions.STOP)
         #get pacmans position
         pacman = api.whereAmI(state)
 
@@ -181,20 +169,21 @@ class PartialAgent(Agent):
 
         return unknown
 
-
-    def getDFSQueue(self, state):
-        print "getDFSQueue"
+    #this function returns a BFS search of the 4 adjacent positions relative to pacman.
+    #Queue is a list of position path pairs, where the path is the path pacman takes to get to the position
+    def getBFSQueue(self, state):
+        print "getBFSQueue"
         #get pacmans position
         pacman = api.whereAmI(state)
         x = pacman[0]
         y = pacman[1]
-
-        #initialize the queue for a Depth First Seach
+        #initialize the queue for a Breath First Seach
         bfsQueue = []
 
-        #searches all squares of distance 1
+        #searches all adjacent squares
         for move in self.possibleMoves:
             direction = move[1]
+            #see if surrounding locations are legal moves. if so, add it to the search
             if direction in self.legal:
                 deltaPosition = move[0]
                 nextPosition = self.sumPair(pacman, deltaPosition)
@@ -205,97 +194,120 @@ class PartialAgent(Agent):
 
         return bfsQueue
 
+    #this method queires a bfsQueue from getBFSQueue() and finds the shortest path to either food or unknown areas of the environment
     def findPath(self, state):
         print "findPath"
         #initialize the queue for a Depth First Seach
-        bfsQueue = self.getDFSQueue(state)
-        #copy of the current state of internal map
+        bfsQueue = self.getBFSQueue(state)
+        #copy of the current state of internal map to mark searched nodes
         copyMap = deepcopy(self.map)
 
         #conducts bfs search
         while len(bfsQueue) != 0:
+            #pop the element from the queue
             nextCheck = bfsQueue.pop(0)
+            #get the position stored at element
             nextCheckPosition = nextCheck[0]
+            #extract x position from position
             possibleX = nextCheckPosition[0]
+            #extract y position from position
             possibleY = nextCheckPosition[1]
+            #if the position contains food, a capsule, or is unknown, pacman will visit it
             if self.map[possibleX][possibleY] == "F" or self.map[possibleX][possibleY] == "?" or self.map[possibleX][possibleY] == "C":
                 print "next move"
+                #pop the first step of the path stored in the currently searching element
                 nextMove = nextCheck[1].pop(0)
+                #set the internal path of pacman to the one found by the BFS
                 self.path = nextCheck[1]
+                #mark the position on the map as "P" to mark visited positions
                 self.map[nextMove[0][0]][nextMove[0][1]] = "P"
+                #return the popped direction stored at the frist step above as the next move
                 return api.makeMove(nextMove[1], api.legalActions(state))
-
             else:
+                #if position does not contain food, capsule, or unknown information, continue the BFS search
                 print "searching bfs"
+                #check all possibleMoves from the current popped from the queue in the current iteration of the BFS algorithm
                 for move in self.possibleMoves:
+                    #get the next position in the search
                     nextPosition = self.sumPair(move[0], nextCheckPosition)
+                    #if this postion is neither a wall nor a location already searched by the algorithm, add it to the search
                     if self.map[nextPosition[0]][nextPosition[1]] != "W" and copyMap[nextPosition[0]][nextPosition[1]] != "X":
+                        #mark this location as searched by the BFS algorithm
                         copyMap[nextPosition[0]][nextPosition[1]] = "X"
+                        #copy the existing path from the search into a new variable
                         path = deepcopy(nextCheck[1])
+                        #add in the new loation and the direction to move to said location to the path
                         path.append((nextPosition, move[1]))
+                        #add the path to the bfsQueue
                         bfsQueue.append((nextPosition, path))
 
+        #if the search is exhausted, there are no moves possible moves left that does not lead to a ghost
         print "no move"
         for row in self.map:
             print row
+        #if no moves are available, pacman will not move
         return api.makeMove(Directions.STOP,  api.legalActions(state))
 
+    #this method discovers the shortest paths to a visible ghost and removes those directions from possible directions pacman can travel in
     def runAway(self, state):
         print "runaway!"
-        print api.whereAmI(state)
+        #retireve the location of visible ghosts
         ghosts = api.ghosts(state)
-        print ghosts
-
-        bfsQueue = self.getDFSQueue(state)
+        #gets a bfsQueue from getBFSQueue
+        bfsQueue = self.getBFSQueue(state)
+        #copy the map to mark nodes already searched in BFS
         copyMap = deepcopy(self.map)
-        count = 0
+        #set the maximum distance to look for ghost to be 3
+        maxDistGhost = 3
 
-        while len(bfsQueue) != 0 and len(bfsQueue[0][1]) < 3:
-            count = count + 1
+        #conduct the BFS search
+        while len(bfsQueue) != 0 and len(bfsQueue[0][1]) < maxDistGhost:
+            print "finding ghost"
+            #pop the element from the queue
             nextCheck = bfsQueue.pop(0)
+            #get the position stored at element
             nextCheckPosition = nextCheck[0]
+            #extract x position from position
             possibleX = nextCheckPosition[0]
+            #extract y position from position
             possibleY = nextCheckPosition[1]
 
+            #if the position searched is the position of the ghost
             if nextCheckPosition in ghosts:
                 print "next move"
-
-                self.ghost = nextCheckPosition
+                #pop the first step of the path stored in the currently searching element
                 nextMove = nextCheck[1].pop(0)
-                self.path = nextCheck[1]
+                #set the variable of the directional to the ghost as dirGhost
                 dirGhost = nextMove[1]
+                #if dirGhost is in list of legal moves, remove it
                 if dirGhost in self.legal:
                     self.legal.remove(dirGhost)
+                    '''
                 dirOpposite = self.opposite[dirGhost]
-
                 if dirOpposite in self.legal:
-                    print dirOpposite
-                    #deltaPosition = None
                     for directions in self.possibleMoves:
                         if dirOpposite == directions[1]:
                             deltaPosition = directions[0]
                             nextPosition = self.sumPair(deltaPosition, (nextMove[0][0], nextMove[0][1]))
                     self.map[nextPosition[0]][nextPosition[1]] = "P"
                     self.path = []
-
-                    #return self.findPath(state)
-
-                    #return api.makeMove(self.opposite[nextMove[1]], self.legal)
-
-                #else:
-                #    if len(self.legal) == 0:
-                #        print "trapped"
-                #        self.path = []
-                #        return api.makeMove(Directions.STOP, self.legal)
-
-                    #pick = random.choice(self.legal)
-                    #print pick
-                    #self.path = []
-                    #return api.makeMove(pick, self.legal)
-
-                    #return self.findPath(state)
-
+                    '''
+            #if the position is not contained in ghosts, continue the search
             else:
+                for move in self.possibleMoves:
+                    #get the next position in the search
+                    nextPosition = self.sumPair(move[0], nextCheckPosition)
+                    #if this postion is neither a wall nor a location already searched by the algorithm, add it to the search
+                    if self.map[nextPosition[0]][nextPosition[1]] != "W" and copyMap[nextPosition[0]][nextPosition[1]] != "X":
+                        #mark this location as searched by the BFS algorithm
+                        copyMap[nextPosition[0]][nextPosition[1]] = "X"
+                        #copy the existing path from the search into a new variable
+                        path = deepcopy(nextCheck[1])
+                        #add in the new loation and the direction to move to said location to the path
+                        path.append((nextPosition, move[1]))
+                        #add the path to the bfsQueue
+                        bfsQueue.append((nextPosition, path))
+                '''
                 for move in self.possibleMoves:
                     nextPosition = self.sumPair(move[0], nextCheckPosition)
                     if self.map[nextPosition[0]][nextPosition[1]] != "W" and copyMap[nextPosition[0]][nextPosition[1]] != "X":
@@ -303,18 +315,17 @@ class PartialAgent(Agent):
                         path = deepcopy(nextCheck[1])
                         path.append((nextPosition, move[1]))
                         bfsQueue.append((nextPosition, path))
+                '''
 
         print "Not running away"
         return self.findPath(state)
 
     # For now I just move randomly
     def getAction(self, state):
-
-        #legal = api.legalActions(state)
-        # if the internal map of the environment has yet to be initialized, initialize it
+        #if the internal map of the environment has yet to be initialized, initialize it
         if not self.init:
             self.initialize(state)
-
+        #update the legal moves for this move
         self.setLegal(state)
 
         #if pacman can detect a ghost nearby pacman needs to run away
@@ -335,11 +346,17 @@ class PartialAgent(Agent):
         '''
         #if a route has been found, pacman will follow it instead of searching again
         if len(self.path) != 0:
+            #pop off the first move in the path
             nextMove = self.path.pop(0)
-            self.map[nextMove[0][0]][nextMove[0][1]] = "P"
+            #check that the move is legal
             if nextMove[1] in self.legal:
+                #mark that position as visited with "P"
+                self.map[nextMove[0][0]][nextMove[0][1]] = "P"
+                #return the move
                 return api.makeMove(nextMove[1], self.legal)
+            #if the move is not legal, find a new path
             else:
                 return self.findPath(state)
+        #otherwise find a path
         else:
             return self.findPath(state)
