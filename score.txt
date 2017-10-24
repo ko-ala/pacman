@@ -1,0 +1,304 @@
+python pacman.py -n 1 -p PartialAgent -l mediumClassic --frameTime=0.01
+
+100:
+
+Average Score: 1250.5
+Scores:        1492.0, -376.0, 40.0, 1549.0, 37.0, 1319.0, 1329.0, 1510.0, 1727.0, 1316.0, 1305.0, 1293.0, 1503.0, 377.0, 1543.0, 1539.0, 1695.0, 1492.0, 1320.0, 1519.0, 1336.0, 1497.0, 182.0, 1943.0, 1712.0, 1337.0, 1501.0, 1309.0, 1300.0, 1519.0, 1270.0, 1319.0, 710.0, 1319.0, 1319.0, 1716.0, 1323.0, 1507.0, 1701.0, 1294.0, 81.0, 1525.0, 1698.0, 1274.0, 1319.0, 1715.0, 1493.0, 1320.0, 1326.0, 1505.0, 1319.0, 1519.0, 1314.0, 1513.0, 86.0, 1319.0, 1281.0, 1315.0, 1339.0, 464.0, 108.0, 1732.0, 55.0, 1711.0, 1319.0, 1337.0, 1510.0, 1460.0, 1320.0, 1523.0, 1336.0, 1743.0, 196.0, 1495.0, 1323.0, 1723.0, 1298.0, 164.0, 1326.0, 1525.0, 1690.0, 1545.0, 378.0, 1315.0, 200.0, 1513.0, 1525.0, 1319.0, 1336.0, 1335.0, 1306.0, 1736.0, 1508.0, 1524.0, 1517.0, 1305.0, 1313.0, 279.0, 1317.0, 1517.0
+Win Rate:      84/100 (0.84)
+Record:        Win, Loss, Loss, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Loss, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win
+
+Average Score: 1269.37
+Scores:        -23.0, 1525.0, 1521.0, 1727.0, 1317.0, 1523.0, 259.0, 1343.0, 1492.0, 1526.0, 1517.0, 460.0, 1314.0, 1711.0, 1709.0, 1506.0, 1319.0, 1322.0, 1509.0, 1747.0, 1300.0, 1501.0, 1527.0, 1307.0, 1320.0, 1323.0, 1513.0, 1692.0, 186.0, 1317.0, 1521.0, 1314.0, 1502.0, 1741.0, 1724.0, 1515.0, 1527.0, 1516.0, 452.0, 1515.0, 1341.0, 1308.0, 187.0, 1296.0, 1331.0, 1545.0, -20.0, 1499.0, 1309.0, 1315.0, 0.0, 1719.0, 1707.0, 1312.0, 1325.0, 1741.0, 1505.0, 1517.0, 1505.0, 1515.0, 1512.0, 1308.0, 1523.0, 389.0, 1316.0, 1709.0, 1506.0, 405.0, 1706.0, 1324.0, 1315.0, 1313.0, 1543.0, 176.0, 1329.0, 1319.0, 1503.0, 1341.0, 1900.0, 1308.0, 1321.0, 1308.0, 1300.0, 1316.0, -375.0, 1319.0, 1315.0, 161.0, 652.0, 1705.0, 1514.0, 299.0, 1504.0, 1507.0, 1711.0, 1317.0, 1311.0, 1707.0, 189.0, 1517.0
+Win Rate:      84/100 (0.84)
+Record:        Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Loss, Loss, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Win
+
+Average Score: 1270.31
+Scores:        1313.0, 1686.0, 1306.0, 1508.0, 456.0, -30.0, 1332.0, 1743.0, 148.0, 1690.0, 1747.0, 1741.0, 1678.0, 1513.0, 1309.0, -118.0, 1304.0, 1321.0, 1315.0, 1315.0, 844.0, 1319.0, 154.0, 301.0, 1502.0, 1315.0, 1513.0, 1713.0, 1510.0, 1715.0, 1512.0, 1324.0, 1306.0, 1527.0, 1315.0, 1319.0, 1309.0, 1513.0, 374.0, 82.0, 1706.0, 1305.0, 1322.0, 1523.0, 1318.0, 1505.0, 262.0, 1320.0, 1502.0, 1521.0, 1305.0, 1543.0, 448.0, 1310.0, 1505.0, 1308.0, 87.0, 1309.0, 1737.0, 1524.0, 1317.0, 1515.0, 1701.0, 1319.0, 1315.0, -119.0, 1322.0, 1502.0, 1509.0, 1297.0, 1540.0, 1515.0, 1502.0, 1294.0, 1319.0, 1528.0, 1510.0, 1305.0, 1287.0, 1313.0, 1326.0, 1543.0, 1345.0, 1318.0, 1312.0, 1513.0, 1323.0, 1514.0, 1507.0, 1343.0, 1703.0, 1337.0, 1301.0, 1343.0, 1906.0, 1713.0, -330.0, 1514.0, 1286.0, 1319.0
+Win Rate:      86/100 (0.86)
+Record:        Win, Win, Win, Win, Loss, Loss, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win
+
+Average Score: 1270.31
+Scores:        1313.0, 1686.0, 1306.0, 1508.0, 456.0, -30.0, 1332.0, 1743.0, 148.0, 1690.0, 1747.0, 1741.0, 1678.0, 1513.0, 1309.0, -118.0, 1304.0, 1321.0, 1315.0, 1315.0, 844.0, 1319.0, 154.0, 301.0, 1502.0, 1315.0, 1513.0, 1713.0, 1510.0, 1715.0, 1512.0, 1324.0, 1306.0, 1527.0, 1315.0, 1319.0, 1309.0, 1513.0, 374.0, 82.0, 1706.0, 1305.0, 1322.0, 1523.0, 1318.0, 1505.0, 262.0, 1320.0, 1502.0, 1521.0, 1305.0, 1543.0, 448.0, 1310.0, 1505.0, 1308.0, 87.0, 1309.0, 1737.0, 1524.0, 1317.0, 1515.0, 1701.0, 1319.0, 1315.0, -119.0, 1322.0, 1502.0, 1509.0, 1297.0, 1540.0, 1515.0, 1502.0, 1294.0, 1319.0, 1528.0, 1510.0, 1305.0, 1287.0, 1313.0, 1326.0, 1543.0, 1345.0, 1318.0, 1312.0, 1513.0, 1323.0, 1514.0, 1507.0, 1343.0, 1703.0, 1337.0, 1301.0, 1343.0, 1906.0, 1713.0, -330.0, 1514.0, 1286.0, 1319.0
+Win Rate:      86/100 (0.86)
+Record:        Win, Win, Win, Win, Loss, Loss, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win
+
+Average Score: 1288.09
+Scores:        1713.0, 1506.0, 1517.0, 1516.0, 1719.0, 1487.0, -109.0, 1521.0, 1319.0, 1525.0, 1297.0, 1496.0, 1317.0, 650.0, -7.0, 1301.0, 1516.0, 1307.0, 1491.0, 1522.0, 1292.0, 67.0, 1531.0, 623.0, 1305.0, 1543.0, 1694.0, 1313.0, 1505.0, 1327.0, -15.0, -3.0, 1311.0, 1515.0, 1321.0, 1513.0, 1517.0, 1516.0, 1304.0, 1344.0, 1709.0, -350.0, 1315.0, 1310.0, 1716.0, 1327.0, 1285.0, 1325.0, 1545.0, 1517.0, 1939.0, 1719.0, 1343.0, 1504.0, 1318.0, 1516.0, 186.0, 1321.0, 1307.0, 1532.0, 1313.0, 1527.0, 1345.0, 1517.0, 1323.0, 1327.0, -115.0, 1503.0, 1304.0, 1498.0, 1299.0, 86.0, 1285.0, 1711.0, 1711.0, 1529.0, 1515.0, 1517.0, 1517.0, 1887.0, 1520.0, 1521.0, 1327.0, 1508.0, 1329.0, 1296.0, 1513.0, 1317.0, 1341.0, 1919.0, 1295.0, 1508.0, 1496.0, 1717.0, 1285.0, 1531.0, 1313.0, 459.0, 1519.0, -15.0
+Win Rate:      87/100 (0.87)
+Record:        Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Loss
+
+Average Score: 1300.36
+Scores:        1517.0, 1535.0, 1689.0, -14.0, 1336.0, 1739.0, 1895.0, 1307.0, 1718.0, 1541.0, 1303.0, 1505.0, 1330.0, 1529.0, 1308.0, 1901.0, 1513.0, 1479.0, 64.0, 1305.0, 1719.0, 1521.0, 1508.0, 1712.0, 1510.0, 406.0, 1332.0, 1917.0, 1914.0, 1524.0, 94.0, 1312.0, 1307.0, 1704.0, 1318.0, 1713.0, 1522.0, 1710.0, 1306.0, 1723.0, 1333.0, 1319.0, 1705.0, -33.0, 1497.0, 1284.0, 1694.0, 1517.0, 1515.0, 1515.0, 1725.0, 1319.0, 1504.0, 1313.0, 1711.0, 1320.0, 84.0, 456.0, 1510.0, 1322.0, 364.0, 52.0, 138.0, 1494.0, 1325.0, 1519.0, 1498.0, 1294.0, 241.0, 1513.0, 1916.0, 1708.0, 1325.0, 1307.0, 1526.0, 1335.0, 1303.0, 1526.0, 1903.0, 658.0, 1310.0, 1327.0, 1517.0, 231.0, 1310.0, 1517.0, 1706.0, 1323.0, 1317.0, 1699.0, 1513.0, 1311.0, 1711.0, 644.0, 533.0, -341.0, 1518.0, 846.0, 1697.0, 1520.0
+Win Rate:      83/100 (0.83)
+Record:        Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Loss, Win, Win, Loss, Loss, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Loss, Loss, Win, Loss, Win, Win
+
+Average Score: 1335.93
+Scores:        1325.0, 1711.0, 1315.0, 1309.0, 1718.0, 1739.0, 1529.0, 1305.0, 1321.0, 156.0, 1310.0, 1313.0, 1716.0, 1521.0, 1513.0, 1325.0, 210.0, 1505.0, 1313.0, 1492.0, 1525.0, 1317.0, 1507.0, -143.0, -310.0, 1709.0, 1690.0, 1547.0, 1313.0, 1520.0, 1516.0, 1503.0, 1309.0, 1307.0, 1515.0, 1317.0, 1299.0, 1488.0, 1298.0, 1312.0, 1506.0, 1519.0, 1299.0, 1303.0, 1905.0, 1516.0, 1319.0, 1305.0, 1721.0, 1339.0, 1721.0, 1313.0, 1305.0, 1329.0, 1314.0, 1522.0, 1314.0, 1321.0, 1711.0, 1505.0, 59.0, 1311.0, 1317.0, 1738.0, 1506.0, 1521.0, 1514.0, 1531.0, 1502.0, 1320.0, -11.0, 1309.0, 1515.0, 1739.0, 1513.0, 1318.0, 1703.0, 1319.0, 1503.0, 625.0, 1516.0, 1515.0, 1522.0, 1519.0, 1338.0, 1298.0, 1320.0, 1685.0, 1315.0, 242.0, 1316.0, 1505.0, 1343.0, 1508.0, 1503.0, -30.0, 1537.0, 1705.0, 1297.0, 1515.0
+Win Rate:      91/100 (0.91)
+Record:        Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win
+
+Average Score: 1271.73
+Scores:        352.0, 1523.0, 1504.0, 1313.0, 1508.0, 1322.0, 1329.0, -118.0, 1486.0, 1523.0, 1330.0, 1319.0, 1711.0, 1296.0, 1327.0, 1525.0, 1309.0, 1497.0, 1302.0, 1505.0, 1510.0, 1308.0, 1302.0, 1516.0, 1519.0, 1532.0, 1322.0, 1709.0, 264.0, 1723.0, -112.0, 169.0, -323.0, 1705.0, 1307.0, 1525.0, 1301.0, 1499.0, 1308.0, 1317.0, 1515.0, 1523.0, 1319.0, 1513.0, 1708.0, 1504.0, 165.0, 40.0, 691.0, 1313.0, 1490.0, 172.0, 1320.0, 1326.0, 1677.0, 1517.0, 1517.0, 195.0, -58.0, 1309.0, 1523.0, 1301.0, 1711.0, 1325.0, 1513.0, 1325.0, 1317.0, 1512.0, 1703.0, 240.0, 1304.0, 1498.0, 1918.0, 1513.0, 1324.0, 1542.0, 1531.0, 1511.0, 1508.0, 1724.0, 1294.0, 1909.0, 1715.0, 1492.0, 1509.0, 1524.0, 1325.0, 1325.0, 1933.0, 1739.0, 1527.0, -111.0, 1513.0, 1513.0, 1505.0, 1507.0, 151.0, 1315.0, 1306.0, 1319.0
+Win Rate:      85/100 (0.85)
+Record:        Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Loss, Loss, Win, Win, Loss, Win, Win, Win, Win, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Win, Win
+
+Average Score: 1241.55
+Scores:        456.0, 1313.0, 1265.0, 1335.0, 1710.0, 1312.0, 1523.0, 1333.0, 1509.0, 270.0, 1294.0, 1325.0, 1485.0, 1543.0, 1311.0, 1312.0, 1288.0, 1308.0, 1511.0, 1327.0, 1321.0, 1312.0, 1541.0, -377.0, 1737.0, 1527.0, 1313.0, 1541.0, 1519.0, 1303.0, 1680.0, 157.0, 1521.0, 1691.0, 195.0, 1525.0, 1317.0, 1521.0, 403.0, 1535.0, 1519.0, 1481.0, 1517.0, 1344.0, 1544.0, 1520.0, 1298.0, 1497.0, 1694.0, 1541.0, 1294.0, 1526.0, 1297.0, 1305.0, -119.0, 1339.0, 1311.0, 1510.0, 1541.0, 1713.0, 217.0, 1537.0, 1517.0, 1711.0, 1312.0, 445.0, 1520.0, 1320.0, 1689.0, 1519.0, 1324.0, 1291.0, 1510.0, 1304.0, 1319.0, 1513.0, 290.0, -4.0, 1516.0, 1506.0, 162.0, 1309.0, 1288.0, 1743.0, -332.0, 1513.0, 1319.0, 1517.0, 1317.0, 1523.0, 1521.0, 1525.0, 1529.0, 220.0, 1543.0, 1315.0, 85.0, 1517.0, 1524.0, -23.0
+Win Rate:      84/100 (0.84)
+Record:        Loss, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Loss, Win, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Loss, Win, Win, Loss
+
+Average Score: 1220.42
+Scores:        1305.0, 1303.0, 1492.0, 1504.0, 281.0, 1917.0, 1507.0, 1340.0, 1315.0, 1302.0, 1508.0, 1313.0, 1312.0, 1326.0, 343.0, 1704.0, 1523.0, 1340.0, 1319.0, 1298.0, 1505.0, 1710.0, 1520.0, 1311.0, 1504.0, 1316.0, 1313.0, 1547.0, 1492.0, 1517.0, 1535.0, 1497.0, 1319.0, 1314.0, 129.0, 1494.0, 1515.0, 12.0, 1523.0, 1539.0, 1688.0, 1313.0, 1311.0, 1321.0, 552.0, 1519.0, 1513.0, 1315.0, -67.0, 1504.0, 1533.0, 1533.0, 358.0, 1324.0, 247.0, 1315.0, 147.0, 1901.0, 1344.0, 1312.0, 1515.0, 1309.0, 1328.0, 1300.0, 1513.0, 454.0, 231.0, 1323.0, 1320.0, 1542.0, 1500.0, 1513.0, 1296.0, 1325.0, 1721.0, 1511.0, 232.0, 1319.0, 13.0, 89.0, 1521.0, 232.0, 1303.0, 1533.0, 1711.0, 1527.0, 1299.0, 1712.0, 1295.0, 1310.0, 410.0, -11.0, 1308.0, 1513.0, 249.0, 1706.0, 1511.0, 1896.0, 279.0, 1537.0
+Win Rate:      81/100 (0.81)
+Record:        Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Loss, Win, Loss, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Loss, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Loss, Win, Win, Loss, Win, Win, Win, Loss, Win
+
+50:
+
+Average Score: 1207.56
+Scores:        1311.0, 101.0, 1502.0, 1512.0, -305.0, 1708.0, 367.0, 1319.0, 1529.0, 1309.0, 1509.0, 1547.0, 1520.0, 1522.0, 1714.0, 1317.0, 1337.0, 207.0, 1316.0, 154.0, 1543.0, -3.0, -7.0, 1309.0, 1706.0, 1524.0, 1544.0, 1317.0, 1511.0, 1523.0, -113.0, 1517.0, 1295.0, 1685.0, 1505.0, -31.0, 1326.0, 1735.0, 1537.0, 1516.0, 1305.0, 1307.0, 1510.0, 1309.0, 1507.0, 1520.0, 1533.0, 1317.0, 1316.0, 1319.0
+Win Rate:      41/50 (0.82)
+Record:        Win, Loss, Win, Win, Loss, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win
+
+Average Score: 1257.54
+Scores:        1343.0, 646.0, 1516.0, 154.0, 1535.0, -288.0, 1513.0, 1705.0, 1302.0, 1508.0, 1725.0, 1501.0, 1533.0, 1519.0, 1731.0, 1323.0, 1337.0, 1706.0, 97.0, 1327.0, 466.0, 1300.0, 1298.0, 1326.0, 1515.0, 1526.0, -306.0, 1319.0, 1504.0, -314.0, 1537.0, 1716.0, 431.0, 1296.0, 1507.0, 656.0, 1307.0, 1507.0, 1709.0, 1519.0, 1313.0, 1515.0, 1517.0, 1707.0, 1518.0, 1507.0, 1535.0, 1509.0, 1507.0, 1697.0
+Win Rate:      41/50 (0.82)
+Record:        Win, Loss, Win, Loss, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Loss, Win, Win, Loss, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win
+
+Average Score: 1212.88
+Scores:        1323.0, 1510.0, 41.0, 1298.0, 1513.0, -113.0, 1909.0, 1311.0, 321.0, 1293.0, 1314.0, 86.0, 1535.0, 1535.0, 1741.0, 1327.0, 1508.0, 1303.0, 1345.0, 1318.0, 1317.0, 1301.0, 1521.0, 1515.0, 1520.0, 128.0, 1709.0, 1296.0, 1515.0, 1519.0, 1507.0, 1315.0, 74.0, 1512.0, 292.0, 1538.0, 1515.0, 1542.0, -51.0, 1697.0, 1309.0, 1327.0, 1308.0, 1339.0, 1322.0, 1519.0, 1531.0, 1323.0, 1509.0, 457.0
+Win Rate:      41/50 (0.82)
+Record:        Win, Win, Loss, Win, Win, Loss, Win, Win, Loss, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss
+
+Average Score: 1318.72
+Scores:        1498.0, 1909.0, 1329.0, 1324.0, 1321.0, 1709.0, 1520.0, 1303.0, 1510.0, 1311.0, 1306.0, 1511.0, 1497.0, 1307.0, 1537.0, 1317.0, 1526.0, 1501.0, 1490.0, 1511.0, 1315.0, 1713.0, -130.0, 1321.0, 1507.0, 1516.0, 1526.0, 1726.0, 187.0, 1536.0, 1311.0, 1321.0, 1919.0, 1315.0, 1333.0, 1316.0, -74.0, 1308.0, 1692.0, 85.0, 155.0, 1513.0, 1313.0, 1311.0, 1321.0, 1480.0, 1717.0, 1492.0, 1341.0, 1313.0
+Win Rate:      45/50 (0.90)
+Record:        Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win
+
+Average Score: 1089.32
+Scores:        1315.0, 252.0, 1321.0, 1327.0, 1311.0, 1318.0, 1305.0, 1312.0, -317.0, 1507.0, 244.0, 1317.0, 1319.0, 1506.0, -31.0, 1707.0, 1333.0, 1347.0, 1493.0, -376.0, 1513.0, 1323.0, 1897.0, 1506.0, 1336.0, 1315.0, 1319.0, 1295.0, -110.0, 1338.0, 1313.0, 133.0, 1522.0, 1317.0, 290.0, 453.0, 1516.0, 1513.0, 1517.0, 1337.0, 1299.0, 1343.0, 1321.0, 460.0, 242.0, -52.0, 1539.0, 1316.0, 1518.0, 1327.0
+Win Rate:      38/50 (0.76)
+Record:        Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Loss, Win, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Loss, Loss, Loss, Win, Win, Win, Win
+
+Average Score: 1355.38
+Scores:        1305.0, 1300.0, 1719.0, 1308.0, 1523.0, 1313.0, 1319.0, 1515.0, 1311.0, 1315.0, 1513.0, 1328.0, 1345.0, 1509.0, 1316.0, 1725.0, 1347.0, 1310.0, 1482.0, 1514.0, -25.0, 233.0, 1511.0, 1692.0, 1292.0, 1506.0, 1529.0, 1535.0, 1315.0, 1513.0, 1319.0, 1309.0, 1517.0, 1306.0, 1721.0, 1538.0, 1321.0, 1525.0, 1906.0, 252.0, 1336.0, 1509.0, 1546.0, 1537.0, 1531.0, 1307.0, 1711.0, 1686.0, -53.0, 1527.0
+Win Rate:      46/50 (0.92)
+Record:        Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win
+
+Average Score: 1303.78
+Scores:        1718.0, 1515.0, 1302.0, 282.0, 1343.0, 1524.0, 1321.0, 1321.0, 1743.0, 234.0, 1525.0, -7.0, 1513.0, 1319.0, 1330.0, 1714.0, 1493.0, 1514.0, 1482.0, 398.0, 1288.0, 1323.0, 1317.0, 1309.0, 1906.0, 1308.0, 1915.0, 1329.0, 1315.0, 1516.0, 1497.0, 1492.0, 1495.0, 1710.0, -30.0, 1345.0, 860.0, 1305.0, 1291.0, 1519.0, 1315.0, 1311.0, 177.0, 1507.0, 1323.0, 1904.0, 1507.0, 1504.0, 1307.0, 1740.0
+Win Rate:      43/50 (0.86)
+Record:        Win, Win, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win
+
+Average Score: 1338.28
+Scores:        1494.0, 1312.0, 1513.0, 1500.0, -350.0, 1717.0, 1512.0, 1317.0, 1320.0, 1321.0, 1496.0, 1547.0, 1703.0, 1535.0, 1713.0, 1515.0, 1329.0, 1492.0, 1304.0, 1300.0, 1296.0, 1517.0, 466.0, 1317.0, 1517.0, 1540.0, 1320.0, 1315.0, 1307.0, 1717.0, 1704.0, 1495.0, 1516.0, 1707.0, 1522.0, 1317.0, 1518.0, 1340.0, 1309.0, 1294.0, 1319.0, 1314.0, 1507.0, 1318.0, -3.0, 1319.0, 222.0, 1496.0, 1309.0, 1489.0
+Win Rate:      46/50 (0.92)
+Record:        Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Win, Win, Win
+
+Average Score: 1334.4
+Scores:        1921.0, 1515.0, 1318.0, 1521.0, 1333.0, 1695.0, 1345.0, 1317.0, 1312.0, 1319.0, 1326.0, 1313.0, 1305.0, 650.0, 1709.0, 1317.0, 1309.0, 1323.0, 1311.0, 1718.0, 1307.0, 1707.0, 1338.0, 1330.0, 1319.0, 1512.0, 448.0, 1708.0, 1307.0, 1287.0, 1503.0, -7.0, 1300.0, 1517.0, 1311.0, 1509.0, 1503.0, 1293.0, 455.0, 1508.0, 460.0, 1512.0, 1708.0, 1317.0, 1498.0, 1733.0, 1528.0, 1313.0, 1324.0, 1295.0
+Win Rate:      45/50 (0.90)
+Record:        Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win
+
+Average Score: 1287.04
+Scores:        1319.0, 1321.0, 1313.0, 218.0, 70.0, 1521.0, 1534.0, 1537.0, 1305.0, 1514.0, 1712.0, 1691.0, 1515.0, 1300.0, 1709.0, 1713.0, 1317.0, 1336.0, 1515.0, -51.0, 1294.0, 1743.0, 1310.0, 1317.0, 1311.0, 270.0, 1308.0, 1511.0, 1311.0, 1707.0, 1299.0, 1547.0, 1315.0, 1307.0, 1317.0, 1320.0, 1502.0, 95.0, 1308.0, 1327.0, 1310.0, 1513.0, 1509.0, 1511.0, 1335.0, 267.0, 1515.0, 1315.0, 1719.0, 1530.0
+Win Rate:      44/50 (0.88)
+Record:        Win, Win, Win, Loss, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win
+
+25:
+
+Average Score: 1249.48
+Scores:        1317.0, 249.0, 1321.0, 95.0, 1515.0, 1709.0, 1304.0, 1713.0, 1343.0, 1318.0, 1336.0, 1315.0, 1713.0, 1321.0, 256.0, 1506.0, 1934.0, 1528.0, 1506.0, 1301.0, 1515.0, 1309.0, -7.0, 1509.0, 1311.0
+Win Rate:      21/25 (0.84)
+Record:        Win, Loss, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win
+
+Average Score: 1217.24
+Scores:        1513.0, 1315.0, 1310.0, 1492.0, 1300.0, 203.0, 1709.0, 1326.0, 1307.0, 1315.0, 1537.0, 1321.0, 1511.0, 1708.0, 1527.0, 1310.0, 28.0, 1311.0, -102.0, 1511.0, 1517.0, 1714.0, 1323.0, 84.0, 1341.0
+Win Rate:      21/25 (0.84)
+Record:        Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Win, Win, Win, Win, Loss, Win
+
+Average Score: 1185.4
+Scores:        1335.0, 1516.0, 1711.0, 1328.0, 1311.0, 1311.0, 1307.0, 475.0, 1307.0, 1292.0, 1319.0, 1303.0, 1320.0, 1317.0, 355.0, 1316.0, 1339.0, 1317.0, 1321.0, 1307.0, 674.0, 1517.0, 1311.0, 1326.0, -300.0
+Win Rate:      21/25 (0.84)
+Record:        Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Loss
+
+Average Score: 1223.2
+Scores:        1319.0, 1329.0, 1520.0, 1319.0, 35.0, 1491.0, 1539.0, 46.0, 1323.0, 1315.0, 189.0, 1328.0, 1517.0, 1717.0, 1520.0, 424.0, 1313.0, 1513.0, 1515.0, 1313.0, 1324.0, 1498.0, 1547.0, 1307.0, 1319.0
+Win Rate:      21/25 (0.84)
+Record:        Win, Win, Win, Win, Loss, Win, Win, Loss, Win, Win, Loss, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win
+
+Average Score: 1138.12
+Scores:        1322.0, 39.0, 1539.0, 1347.0, 1909.0, 1715.0, -23.0, 195.0, 1311.0, 95.0, 23.0, 1309.0, 1705.0, 1508.0, 1690.0, 1719.0, 331.0, 1508.0, 1909.0, 1310.0, 1340.0, 1739.0, 1521.0, 1500.0, -108.0
+Win Rate:      18/25 (0.72)
+Record:        Win, Loss, Win, Win, Win, Win, Loss, Loss, Win, Loss, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Loss
+
+Average Score: 1369.84
+Scores:        1329.0, 1517.0, 1315.0, 1524.0, 1522.0, 1532.0, 1312.0, 1508.0, 1713.0, 1306.0, 1313.0, 1341.0, 1524.0, 1317.0, 1534.0, 1541.0, 44.0, 1507.0, 1506.0, 1710.0, 1327.0, 1518.0, 1510.0, 269.0, 1707.0
+Win Rate:      23/25 (0.92)
+Record:        Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Loss, Win
+
+Average Score: 1188.0
+Scores:        104.0, 1733.0, 1721.0, 1317.0, 1311.0, 1522.0, 1299.0, 449.0, 1318.0, 1314.0, 1307.0, 1315.0, 1531.0, 1334.0, 1499.0, 77.0, 1533.0, -306.0, 1313.0, 1515.0, 1336.0, 1926.0, 1500.0, 227.0, 1505.0
+Win Rate:      20/25 (0.80)
+Record:        Loss, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Loss, Win, Win, Win, Win, Win, Loss, Win
+
+Average Score: 1427.44
+Scores:        1708.0, 1517.0, 1304.0, -21.0, 1933.0, 1500.0, 1521.0, 1515.0, 1298.0, 1336.0, 1311.0, 1500.0, 1289.0, 1513.0, 1519.0, 1316.0, 1324.0, 1709.0, 1303.0, 1517.0, 1317.0, 1908.0, 1527.0, 1509.0, 1513.0
+Win Rate:      24/25 (0.96)
+Record:        Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win
+
+Average Score: 1312.16
+Scores:        1317.0, 1319.0, 1347.0, 1306.0, 1727.0, 1506.0, 1704.0, 1319.0, 1290.0, 1705.0, 1518.0, 1317.0, 1497.0, -96.0, 1709.0, 1321.0, 1334.0, -375.0, 1302.0, 1723.0, 1317.0, 1319.0, 1514.0, 1326.0, 1538.0
+Win Rate:      23/25 (0.92)
+Record:        Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win
+
+Average Score: 1385.12
+Scores:        1515.0, 1515.0, 1519.0, 1520.0, 1513.0, 1717.0, 1877.0, 1492.0, 1509.0, 1297.0, 233.0, 1545.0, 1315.0, 1535.0, 1477.0, 1517.0, -23.0, 1537.0, 1517.0, 1317.0, 1341.0, 1317.0, 1312.0, 1493.0, 1721.0
+Win Rate:      23/25 (0.92)
+Record:        Win, Win, Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win
+
+10:
+
+Average Score: 1244.1
+Scores:        1312.0, 1509.0, 1507.0, 1511.0, 1518.0, 1309.0, 1511.0, 856.0, 1313.0, 95.0
+Win Rate:      8/10 (0.80)
+Record:        Win, Win, Win, Win, Win, Win, Win, Loss, Win, Loss
+
+Average Score: 1351.2
+Scores:        1484.0, 1545.0, 460.0, 1323.0, 1513.0, 1695.0, 1514.0, 1310.0, 1343.0, 1325.0
+Win Rate:      9/10 (0.90)
+Record:        Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win
+
+Average Score: 1381.3
+Scores:        1509.0, 1303.0, 1317.0, 1331.0, 1319.0, 1345.0, 1317.0, 1318.0, 1545.0, 1509.0
+Win Rate:      10/10 (1.00)
+Record:        Win, Win, Win, Win, Win, Win, Win, Win, Win, Win
+
+Average Score: 1182.6
+Scores:        1494.0, 189.0, 1307.0, 1484.0, 1501.0, -3.0, 1488.0, 1508.0, 1517.0, 1341.0
+Win Rate:      8/10 (0.80)
+Record:        Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win
+
+Average Score: 1341.7
+Scores:        1307.0, 1529.0, 1321.0, 1307.0, 342.0, 1741.0, 1317.0, 1320.0, 1731.0, 1502.0
+Win Rate:      9/10 (0.90)
+Record:        Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win
+
+Average Score: 1470.3
+Scores:        1305.0, 1515.0, 1713.0, 1315.0, 1506.0, 1715.0, 1512.0, 1943.0, 654.0, 1525.0
+Win Rate:      9/10 (0.90)
+Record:        Win, Win, Win, Win, Win, Win, Win, Win, Loss, Win
+
+Average Score: 1108.3
+Scores:        1541.0, -111.0, 1322.0, 1345.0, 1541.0, -9.0, 1499.0, 1309.0, 1325.0, 1321.0
+Win Rate:      8/10 (0.80)
+Record:        Win, Loss, Win, Win, Win, Loss, Win, Win, Win, Win
+
+Average Score: 1311.3
+Scores:        1334.0, 1325.0, 201.0, 1519.0, 1341.0, 1704.0, 1709.0, 1313.0, 1343.0, 1324.0
+Win Rate:      9/10 (0.90)
+Record:        Win, Win, Loss, Win, Win, Win, Win, Win, Win, Win
+
+Average Score: 1341.7
+Scores:        1307.0, 1529.0, 1321.0, 1307.0, 342.0, 1741.0, 1317.0, 1320.0, 1731.0, 1502.0
+Win Rate:      9/10 (0.90)
+Record:        Win, Win, Win, Win, Loss, Win, Win, Win, Win, Win
+
+Average Score: 1342.6
+Scores:        1283.0, 371.0, 1519.0, 1709.0, 1334.0, 1328.0, 1318.0, 1339.0, 1742.0, 1483.0
+Win Rate:      9/10 (0.90)
+Record:        Win, Loss, Win, Win, Win, Win, Win, Win, Win, Win
+
+5:
+
+Average Score: 1316.8
+Scores:        1513.0, 1341.0, 293.0, 1890.0, 1547.0
+Win Rate:      4/5 (0.80)
+Record:        Win, Win, Loss, Win, Win
+
+Average Score: 1255.4
+Scores:        1310.0, 1315.0, 1530.0, 393.0, 1729.0
+Win Rate:      4/5 (0.80)
+Record:        Win, Win, Win, Loss, Win
+
+Average Score: 1476.2
+Scores:        1523.0, 1313.0, 1313.0, 1719.0, 1513.0
+Win Rate:      5/5 (1.00)
+Record:        Win, Win, Win, Win, Win
+
+Average Score: 1428.0
+Scores:        1319.0, 1506.0, 1700.0, 1294.0, 1321.0
+Win Rate:      5/5 (1.00)
+Record:        Win, Win, Win, Win, Win
+
+Average Score: 1181.8
+Scores:        1511.0, 1325.0, 1517.0, 39.0, 1517.0
+Win Rate:      4/5 (0.80)
+Record:        Win, Win, Win, Loss, Win
+
+Average Score: 1105.0
+Scores:        1345.0, 1293.0, 42.0, 1321.0, 1524.0
+Win Rate:      4/5 (0.80)
+Record:        Win, Win, Loss, Win, Win
+
+Average Score: 938.0
+Scores:        1515.0, 1315.0, 1515.0, -113.0, 458.0
+Win Rate:      3/5 (0.60)
+Record:        Win, Win, Win, Loss, Loss
+
+Average Score: 1399.4
+Scores:        1300.0, 1347.0, 1318.0, 1310.0, 1722.0
+Win Rate:      5/5 (1.00)
+Record:        Win, Win, Win, Win, Win
+
+
+1:
+
+Average Score: 1321.0
+Scores:        1321.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+
+Average Score: 8.0
+Scores:        8.0
+Win Rate:      0/1 (0.00)
+Record:        Loss
+
+Average Score: 1316.0
+Scores:        1316.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+
+Average Score: 1494.0
+Scores:        1494.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+
+Average Score: 1330.0
+Scores:        1330.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+
+Average Score: 1711.0
+Scores:        1711.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+
+Average Score: 1320.0
+Scores:        1320.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+
+Average Score: 1331.0
+Scores:        1331.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+
+Average Score: 1505.0
+Scores:        1505.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+
+Average Score: 1523.0
+Scores:        1523.0
+Win Rate:      1/1 (1.00)
+Record:        Win

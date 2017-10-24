@@ -124,8 +124,8 @@ class PartialAgent(Agent):
             self.map[pacmanX][pacmanY] = "P"
 
         #set init to true as the map has been initialized
-        for row in self.map:
-            print row
+        #for row in self.map:
+            #print row
 
         self.init = True
 
@@ -153,8 +153,8 @@ class PartialAgent(Agent):
                     self.map[position[0]][position[1]] = "O"
             count += 1
 
-        for row in self.map:
-            print row
+        #for row in self.map:
+            #print row
 
         '''#print "updateMap"
         # get location of all visible food
@@ -245,8 +245,8 @@ class PartialAgent(Agent):
 
         #if the search is exhausted, there are no moves possible moves left that does not lead to a ghost
         #print "no move"
-        for row in self.map:
-            print row
+        #for row in self.map:
+        #    print row
         #if no moves are available, pacman will not move
         self.lastDir = Directions.STOP
         return api.makeMove(Directions.STOP,  api.legalActions(state))
