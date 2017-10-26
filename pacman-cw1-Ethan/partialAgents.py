@@ -27,7 +27,7 @@
 
 # The agent here is was written by Simon Parsons, based on the code in
 # pacmanAgents.py
-
+#python pacman.py -n 1000 -p PartialAgent -l mediumClassic --frameTime=0.001
 from pacman import Directions
 from game import Agent
 import api
