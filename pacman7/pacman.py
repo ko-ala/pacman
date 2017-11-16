@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -659,6 +659,8 @@ def runGames( layout, pacman, ghosts, display, numGames, record, numTraining = 0
         wins = [game.state.isWin() for game in games]
         winRate = wins.count(True)/ float(len(wins))
         print 'Average Score:', sum(scores) / float(len(scores))
+        print 'Max:          ', max(scores)
+        print 'Min:          ', min(scores)
         print 'Scores:       ', ', '.join([str(score) for score in scores])
         print 'Win Rate:      %d/%d (%.2f)' % (wins.count(True), len(wins), winRate)
         print 'Record:       ', ', '.join([ ['Loss', 'Win'][int(w)] for w in wins])

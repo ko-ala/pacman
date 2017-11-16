@@ -144,7 +144,6 @@ class GreedyAgent2(Agent):
 
         return api.makeMove(self.possibleMoves[index][1], self.legal)
 
-
     def getAction(self, state):
         if not self.init:
             self.initialize(state)
@@ -184,7 +183,8 @@ class BellmanAgent(Agent):
         self.possibleMoves = [((-1,0), Directions.WEST), ((0,1),Directions.NORTH), ((1,0), Directions.EAST), ((0,-1),Directions.SOUTH)]
         #list of legal moves for this turn
         self.legal = []
-        self.discount = 0.5
+        self.pacman = ()
+        self.discount = .75
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
     def initialize(self, state):
@@ -234,52 +234,107 @@ class BellmanAgent(Agent):
         #set init to true as the map has been initialized
         self.init = True
 
-        def bellman(self, state):
-            newUtility = deepcopy(self.utility)
-            width = len(self.utility)
-            height = len(self.utility[0])
-            minDif = 10000
-            while(maxDif > 1):
-                for y in range(0, height):
-                    for x in range(0, width):
-                        if newUtility[x][y] != "W":
-                            maxUtility = -1000000
-                            for i in range(len(self.possibleMoves)):
-                                deltaForward = self.possibleMoves[i][0]
-                                deltaLeft = self.possibleMoves[(i+3) % 4][0]
-                                deltaRight = self.possibleMoves[(i+1) % 4][0]
+    def sumPair(self, pair1, pair2):
+        newX = pair1[0] + pair2[0]
+        newY = pair1[1] + pair2[1]
+        return (newX, newY)
 
-                                nextFoward = self.sumPair(self.pacman, deltaFoward)
-                                nextLeft = self.sumPair(self.pacman, deltaLeft)
-                                nextRight = self.sumPair(self.pacman, deltaRight)
+    def bellman(self, state):
+        newUtility = deepcopy(self.utility)
+        width = len(self.utility)
+        height = len(self.utility[0])
+        minDif = 10000
+        count = 0
+        while(minDif > 0.5 and count < 500):
 
-                                forwardUtility = self.utility[nextForward[0]][nextFoward[1]]
-                                leftUtility = self.utility[nextLeft[0]][nextLeft[1]]
-                                rightUtility = self.utility[nextRight[0]][nextRight[1]]
+            #print count
+            #for row in self.utility:
+            #    print row
 
-                                if forwardUtility != "W":
-                                    left = 0.1
-                                    foward = 0.8
-                                    right = 0.1
-                                    if leftUtility == "W":
-                                        forward = forward + left
-                                        leftUtility = 0
-                                    if rightUtility == "W":
-                                        forward = forward + right
-                                        rightUtility = 0
-                                    adjUtility = left*leftUtility + forward*forwardUtility + right*rightUtility
-                                    if maxUtility < adjUtility:
-                                        maxUtility = adjUtility
+            for y in range(0, height):
+                for x in range(0, width):
+                    if newUtility[x][y] != "W":
+                        maxUtility = -1000000
+                        for i in range(len(self.possibleMoves)):
+                            deltaForward = self.possibleMoves[i][0]
+                            deltaLeft = self.possibleMoves[(i+3) % 4][0]
+                            deltaRight = self.possibleMoves[(i+1) % 4][0]
 
-                            newUtility[x][y] = slef.reward[x][y] + self.discount * maxUtility
-                            dif = abs(newUtility[x][y] - self.utility[x][y])
-                            if minDif > dif:
-                                minDif = dif
+                            nextForward = self.sumPair(self.pacman, deltaForward)
+                            nextLeft = self.sumPair(self.pacman, deltaLeft)
+                            nextRight = self.sumPair(self.pacman, deltaRight)
 
+                            forwardUtility = self.utility[nextForward[0]][nextForward[1]]
+                            leftUtility = self.utility[nextLeft[0]][nextLeft[1]]
+                            rightUtility = self.utility[nextRight[0]][nextRight[1]]
 
+                            #print forwardUtility
+                            #print leftUtility
+                            #print rightUtility
 
-        def getAction(self, state):
-            if not self.init:
-                self.initialize(state)
+                            if forwardUtility != "W":
+                                left = 0.1
+                                forward = 0.8
+                                right = 0.1
+                                if leftUtility == "W":
+                                    forward = forward + left
+                                    leftUtility = 0
+                                if rightUtility == "W":
+                                    forward = forward + right
+                                    rightUtility = 0
+                                adjUtility = left*leftUtility + forward*forwardUtility + right*rightUtility
+                                if maxUtility < adjUtility:
+                                    maxUtility = adjUtility
 
-            self.bellman(state)
+                        newUtility[x][y] = self.reward[x][y] + (self.discount * maxUtility)
+                        dif = abs(newUtility[x][y] - self.utility[x][y])
+                        if minDif > dif:
+                            minDif = dif
+            count = count + 1
+            #print minDif
+        #print count
+        print "newUtility"
+        for row in newUtility:
+            print row
+        print "self.utility"
+        for row in self.utility:
+            print row
+
+        self.utility = newUtility
+
+    def getMove(self,state):
+        max = -10000000
+        move = None
+        for i in range(len(self.possibleMoves)):
+            direction = self.possibleMoves[i][1]
+            if direction in self.legal:
+                deltaPosition = self.possibleMoves[i][0]
+                nextPosition = self.sumPair(self.pacman, deltaPosition)
+                positionScore = self.utility[nextPosition[0]][nextPosition[1]]
+                if max < positionScore:
+                    max = positionScore
+                    move = direction
+
+        print "utility"
+        for row in self.utility:
+            print row
+        return api.makeMove(move, self.legal)
+
+    def getAction(self, state):
+        if not self.init:
+            self.initialize(state)
+
+        self.pacman = api.whereAmI(state)
+        self.legal = api.legalActions(state)
+
+        if self.reward[self.pacman[0]][self.pacman[1]] < 10:
+            self.reward[self.pacman[0]][self.pacman[1]] = self.reward[self.pacman[0]][self.pacman[1]] - 1
+        else:
+            self.reward[self.pacman[0]][self.pacman[1]] = -1
+
+        print ""
+        for row in self.reward:
+            print row
+
+        self.bellman(state)
+        return self.getMove(state)
