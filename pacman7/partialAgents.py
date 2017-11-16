@@ -184,7 +184,7 @@ class BellmanAgent(Agent):
         #list of legal moves for this turn
         self.legal = []
         self.pacman = ()
-        self.discount = .75
+        self.discount = .4
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
     def initialize(self, state):
@@ -218,7 +218,7 @@ class BellmanAgent(Agent):
 
             #once the size of the map has been identified, fill it up with "?", as pacman does not know what is in there
             self.reward = [[-1 for y in range(height+1)] for x in range(width+1)]
-            self.utility = [[random() for y in range(height+1)] for x in range(width+1)]
+            self.utility = [[0 for y in range(height+1)] for x in range(width+1)]
             #now add in all the information pacman knows initially. starting with all known locations of food
             for food in foods:
                 #use "F" to mark food on the map
@@ -240,37 +240,35 @@ class BellmanAgent(Agent):
         return (newX, newY)
 
     def bellman(self, state):
+        print "bellman"
         newUtility = deepcopy(self.utility)
         width = len(self.utility)
         height = len(self.utility[0])
         minDif = 10000
         count = 0
-        while(minDif > 0.5 and count < 500):
+        while(minDif > 0.5):
 
             #print count
             #for row in self.utility:
             #    print row
-
+            #for every grid in the map
             for y in range(0, height):
                 for x in range(0, width):
                     if newUtility[x][y] != "W":
-                        maxUtility = -1000000
+                        #maxUtility = -1000000
+                        scores = [-100,-100,-100,-100]
                         for i in range(len(self.possibleMoves)):
                             deltaForward = self.possibleMoves[i][0]
                             deltaLeft = self.possibleMoves[(i+3) % 4][0]
                             deltaRight = self.possibleMoves[(i+1) % 4][0]
 
-                            nextForward = self.sumPair(self.pacman, deltaForward)
-                            nextLeft = self.sumPair(self.pacman, deltaLeft)
-                            nextRight = self.sumPair(self.pacman, deltaRight)
+                            nextForward = self.sumPair((x,y), deltaForward)
+                            nextLeft = self.sumPair((x,y), deltaLeft)
+                            nextRight = self.sumPair((x,y), deltaRight)
 
                             forwardUtility = self.utility[nextForward[0]][nextForward[1]]
                             leftUtility = self.utility[nextLeft[0]][nextLeft[1]]
                             rightUtility = self.utility[nextRight[0]][nextRight[1]]
-
-                            #print forwardUtility
-                            #print leftUtility
-                            #print rightUtility
 
                             if forwardUtility != "W":
                                 left = 0.1
@@ -283,26 +281,32 @@ class BellmanAgent(Agent):
                                     forward = forward + right
                                     rightUtility = 0
                                 adjUtility = left*leftUtility + forward*forwardUtility + right*rightUtility
-                                if maxUtility < adjUtility:
-                                    maxUtility = adjUtility
+                                scores[i] = adjUtility
+                                #print adjUtility
+                                #print maxUtility
+                                #if maxUtility < adjUtility:
+                                    #maxUtility = adjUtility
+                            else:
+                                scores[i] = -100000
 
-                        newUtility[x][y] = self.reward[x][y] + (self.discount * maxUtility)
+                        newUtility[x][y] = self.reward[x][y] + (self.discount * max(scores))
                         dif = abs(newUtility[x][y] - self.utility[x][y])
                         if minDif > dif:
                             minDif = dif
             count = count + 1
             #print minDif
-        #print count
-        print "newUtility"
-        for row in newUtility:
-            print row
-        print "self.utility"
-        for row in self.utility:
-            print row
+        print count
+        #print "newUtility"
+        #for row in newUtility:
+        #    print row
+        #print "self.utility"
+        #for row in self.utility:
+        #    print row
 
         self.utility = newUtility
 
     def getMove(self,state):
+        print "getmove"
         max = -10000000
         move = None
         for i in range(len(self.possibleMoves)):
@@ -321,20 +325,25 @@ class BellmanAgent(Agent):
         return api.makeMove(move, self.legal)
 
     def getAction(self, state):
-        if not self.init:
-            self.initialize(state)
 
         self.pacman = api.whereAmI(state)
         self.legal = api.legalActions(state)
 
-        if self.reward[self.pacman[0]][self.pacman[1]] < 10:
-            self.reward[self.pacman[0]][self.pacman[1]] = self.reward[self.pacman[0]][self.pacman[1]] - 1
+        if not self.init:
+            self.initialize(state)
         else:
-            self.reward[self.pacman[0]][self.pacman[1]] = -1
+            if self.reward[self.pacman[0]][self.pacman[1]] < 10:
+                self.reward[self.pacman[0]][self.pacman[1]] = self.reward[self.pacman[0]][self.pacman[1]] - 1
+            else:
+                self.reward[self.pacman[0]][self.pacman[1]] = -1
 
-        print ""
-        for row in self.reward:
-            print row
+        #print "reward"
+        #for row in self.reward:
+        #    print row
 
         self.bellman(state)
+
+        print "reward"
+        for row in self.reward:
+            print row
         return self.getMove(state)
