@@ -1,0 +1,23 @@
+discount = 0.6
+threshold = 0.001
+  Average Score: 1255.552
+  Max:           1327.0
+  Min:           1054.0
+
+discount = 0.8
+threshold = 0.001
+  Average Score: 1270.547
+  Max:           1328.0
+  Min:           1179.0
+
+discount = 0.99 - very slow
+threshold = 0.001
+  Average Score: 1269.531
+  Max:           1326.0
+  Min:           1183.0
+
+discount = 0.4
+threshold = 0.001
+  Average Score: 1236.722
+  Max:           1321.0
+  Min:           1000.0
