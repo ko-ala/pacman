@@ -184,7 +184,7 @@ class BellmanAgent(Agent):
         #list of legal moves for this turn
         self.legal = []
         self.pacman = ()
-        self.discount = .4
+        self.discount = .99
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
     def initialize(self, state):
@@ -323,9 +323,9 @@ class BellmanAgent(Agent):
         if not self.init:
             self.initialize(state)
         else:
-            if self.reward[self.pacman[0]][self.pacman[1]] < 10:
-                self.reward[self.pacman[0]][self.pacman[1]] = self.reward[self.pacman[0]][self.pacman[1]] - 1
-            else:
+        #    if self.reward[self.pacman[0]][self.pacman[1]] < 10:
+        #        self.reward[self.pacman[0]][self.pacman[1]] = self.reward[self.pacman[0]][self.pacman[1]] - 1
+        #    else:
                 self.reward[self.pacman[0]][self.pacman[1]] = -1
 
         #print "reward"

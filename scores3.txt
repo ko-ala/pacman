@@ -1,0 +1,89 @@
+
+discount = 0.4
+threshold = 0.001
+  Average Score: 1236.722
+  Max:           1321.0
+  Min:           1000.0
+
+discount = 0.4
+threshold = 0.0001
+  Average Score: 1237.341
+  Max:           1320.0
+  Min:           1051.0
+
+discount = 0.5
+threshold = 0.001
+  Average Score: 1248.069
+  Max:           1323.0
+  Min:           1083.0
+
+discount = 0.5
+threshold = 0.0001
+  Average Score: 1246.496
+  Max:           1330.0
+  Min:           1040.0
+
+discount = 0.6
+threshold = 0.001
+  Average Score: 1255.552
+  Max:           1327.0
+  Min:           1054.0
+
+discount = 0.6
+threshold = 0.0001
+  Average Score: 1258.934
+  Max:           1327.0
+  Min:           1109.0
+
+discount = 0.8
+threshold = 0.001
+  Average Score: 1270.547
+  Max:           1328.0
+  Min:           1179.0
+
+discount = 0.8
+threshold = 0.0001
+  Average Score: 1271.297
+  Max:           1328.0
+  Min:           1152.0
+
+discount = 0.99 - very slow
+threshold = 0.001
+  Average Score: 1269.531
+  Max:           1326.0
+  Min:           1183.0
+
+discount = 0.99
+threshold = 0.0001
+  Average Score: 1270.706
+  Max:           1323.0
+  Min:           1197.0
+
+removed decreasing score for repeated location
+
+discount = 0.2
+threshold = 0.0001
+  Average Score: 1284.067
+  Max:           1332.0
+  Min:           1233.0
+
+discount = 0.4
+threshold = 0.0001
+  Average Score: 1284.194
+  Max:           1324.0
+  Min:           1239.0
+
+discount = 0.6
+threshold = 0.0001
+  Average Score: 1283.801
+  Max:           1329.0
+  Min:           1226.0
+
+discount = 0.8
+threshold = 0.0001
+  Average Score: 1281.97
+  Max:           1327.0
+  Min:           1211.0
+
+discount = 0.99
+threshold = 0.0001
