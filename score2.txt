@@ -1,0 +1,48 @@
+mediumCLassic
+  discount factor = 0.5
+  Average Score: 1077.08
+  Max:           1316.0
+  Min:           528.0
+
+  discount factor = 0.75
+  Average Score: 1074.3
+  Max:           1269.0
+  Min:           716.0
+
+  discount faction = 0.25
+  Average Score: 1082.78
+  Max:           1290.0
+  Min:           807.0
+
+  discount factor = 0.01 - very fast
+  Average Score: 1088.21
+  Max:           1283.0
+  Min:           853.0
+
+  discount factor = 0.99 - takes FOREVER
+  Average Score: 1072.79
+  Max:           1281.0
+  Min:           746.0
+
+  Not much different
+
+smallMDPGrid
+  discount factor = 0.99 - takes FOREVER
+  Average Score: 489.55
+  Max:           502.0
+  Min:           424.0
+
+  discount factor = 0.01
+  Average Score: 489.66
+  Max:           502.0
+  Min:           434.0
+
+  discount factor = 0.5
+  Average Score: 488.29
+  Max:           502.0
+  Min:           438.0
+
+  discount factor = 0.75
+  Average Score: 489.09
+  Max:           502.0
+  Min:           440.0
