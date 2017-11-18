@@ -87,3 +87,25 @@ threshold = 0.0001
 
 discount = 0.99
 threshold = 0.0001
+nope
+
+
+After fix (cant move now uses current location not forward)
+
+discount = 0.6
+threshold = 0.0001
+  Average Score: 1284.994
+  Max:           1322.0
+  Min:           1234.0
+
+discount = 0.4
+threshold = 0.0001
+  Average Score: 1286.334
+  Max:           1324.0
+  Min:           1242.0
+
+discount = 0.2
+threshold = 0.0001
+  Average Score: 1286.237
+  Max:           1327.0
+  Min:           1238.0
