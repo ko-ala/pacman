@@ -184,7 +184,8 @@ class BellmanAgent(Agent):
         #list of legal moves for this turn
         self.legal = []
         self.pacman = ()
-        self.discount = .99
+        self.discount = .2
+        self.threshold = 0.0001
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
     def initialize(self, state):
@@ -239,6 +240,19 @@ class BellmanAgent(Agent):
         newY = pair1[1] + pair2[1]
         return (newX, newY)
 
+    def updateMap(self,state):
+        #now add in all the information pacman knows initially. starting with all known locations of food
+        for food in foods:
+            #use "F" to mark food on the map
+            self.reward[food[0]][food[1]] = 10
+        #now mark the location of capsules on the map, this time using "C"
+        for capsule in capsules:
+            self.reward[capsule[0]][capsule[1]] = 5
+        #now mark the location of the walls on the map, using "W"
+        for wall in walls:
+            self.reward[wall[0]][wall[1]] = "W"
+            self.utility[wall[0]][wall[1]] = "W"
+
     def bellman(self, state):
         #print "bellman"
         #print "original utility"
@@ -249,14 +263,16 @@ class BellmanAgent(Agent):
         height = len(self.utility[0])
         minDif = 10000
         count = 0
-        while(minDif > 0.0001 and count < 100000):
+        while(minDif > self.threshold and count < 100000):
             newUtility = deepcopy(self.utility)
             #for every grid in the map
             for y in range(0, height):
                 for x in range(0, width):
                     if newUtility[x][y] != "W":
                         #maxUtility = -1000000
-                        scores = [-100000,-100000,-100000,-100000]
+                        scores = []
+                        #scores = [-100000,-100000,-100000,-100000]
+                        #need to fix
                         for i in range(len(self.possibleMoves)):
                             deltaForward = self.possibleMoves[i][0]
                             deltaLeft = self.possibleMoves[(i+3) % 4][0]
@@ -275,13 +291,12 @@ class BellmanAgent(Agent):
                                 forward = 0.8
                                 right = 0.1
                                 if leftUtility == "W":
-                                    forward = forward + left
-                                    leftUtility = 0
+                                    leftUtility = self.utility[x][y]
                                 if rightUtility == "W":
-                                    forward = forward + right
-                                    rightUtility = 0
+                                    rightUtility = self.utility[x][y]
                                 adjUtility = left*leftUtility + forward*forwardUtility + right*rightUtility
-                                scores[i] = adjUtility
+                                #scores[i] = adjUtility
+                                scores.append(adjUtility)
 
                         newUtility[x][y] = self.reward[x][y] + (self.discount * max(scores))
                         dif = abs(newUtility[x][y] - self.utility[x][y])
@@ -291,13 +306,13 @@ class BellmanAgent(Agent):
             #print minDif
             self.utility = newUtility
         #print minDif
-        #print count
+        print count
             #for row in self.utility:
             #    print row
 
-        #print "new utility"
-        #for row in self.utility:
-        #    print row
+        print "new utility"
+        for row in self.utility:
+            print row
 
     def getMove(self,state):
         #print "getmove"
@@ -328,9 +343,9 @@ class BellmanAgent(Agent):
         #    else:
                 self.reward[self.pacman[0]][self.pacman[1]] = -1
 
-        #print "reward"
-        #for row in self.reward:
-        #    print row
+        print "reward"
+        for row in self.reward:
+            print row
 
         #print "\nreward"
         #for row in self.reward:
