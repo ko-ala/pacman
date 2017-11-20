@@ -1,7 +1,7 @@
 # api.py
 # parsons/15-oct-2017
 #
-# Version 4
+# Version 3
 #
 # With acknowledgements to Jiaming Ke, who was the first to report the
 # bug in corners.
@@ -30,35 +30,14 @@
 # The code here was written by Simon Parsons, based on examples from
 # the PacMan AI projects.
 
-from random import random
 from pacman import Directions
 import util
 
-#
-# Parameters
-#
-
-# Control visibility.
-#
-# If partialVisibility is True, Pacman will only see part of the
-# environment.
-partialVisibility = False
-
-# The limits of visibility when visibility is partial
 sideLimit = 1
 hearingLimit = 2
 visibilityLimit = 5
 
-# Control determinism
 #
-# If nonDeterministic is True, Pacman's action model will be
-# nonDeterministic.
-nonDeterministic = True
-
-# Probability that Pacman carries out the intended action:
-directionProb = 0.8
-
-# 
 # Sensing
 #
 def whereAmI(state):
@@ -72,7 +51,7 @@ def whereAmI(state):
 def legalActions(state):
     # Returns the legal set of actions
     #
-    # Just pulls this data out of the state. Function included so that
+    # Just pulls this data out of the state. Functin included so that
     # all interactions are through this API.
     
     return state.getLegalPacmanActions()
@@ -168,36 +147,10 @@ def corners(state):
 # Acting
 #
 def makeMove(direction, legal):
-    # This version implements non-deterministic movement.
-    #
-    # Paacman has a probability of directionProb of moving in the
-    # specified direction, and 0.5*(1 - directionProb) of moving
-    # perpendicular to the specified direction. Any attempt to move in
-    # an direction that is not legal means Pacman stays in the same
-    # place.
-    #
-    # With the default setting of directionProb = 0.8, this is exactly
-    # the motion model we studied in the MDP lecture.
-
-    # If Pacman hasn't yet moved, then non-determinism plays no role in
-    # deciding what Pacman does:
-    if direction == Directions.STOP:
-        return direction
+    # This version is simple, just return the direction that was picked.
+    # In later versions, this will be more complex
     
-    if nonDeterministic:
-        # Sample in the usual way to make Pacman move in the specified
-        # direction with probability directionProb.
-        #
-        # Otherwise make a different move.
-        sample = random()
-        if sample <= directionProb:
-            return direction
-        else:
-            return selectNewMove(direction, legal)
-    else:
-        # When actions are deterministic, Pacman moves in the
-        # specified direction
-        return direction
+    return direction
 
 #
 # Details that you don't need to look at if you don't want to.
@@ -310,8 +263,6 @@ def visible(objects, state):
     # When passed a list of objects, returns those that are visible to
     # Pacman.
 
-    # This code creates partial observability by only returning some
-    # of the members of objects.
     facing = state.getPacmanState().configuration.direction
     visibleObjects = []
     sideObjects = []
@@ -339,10 +290,6 @@ def visible(objects, state):
     else:
 
         # If Pacman is not moving, they can see in all directions.
-        #
-        # Unfortunately facing will never have value Directions.STOP
-        # after the first move is made, so this code will not run
-        # after the first move :-(
 
         for i in range(len(objects)):
             if inFront(objects[i], Directions.NORTH, state):
@@ -354,13 +301,8 @@ def visible(objects, state):
             if inFront(objects[i], Directions.WEST, state):
                 visibleObjects.append(objects[i])
         visibleObjects = distanceLimited(visibleObjects, state, visibilityLimit)
-
-    # If we return visibleObjects, we have partial observability. If
-    # we return objects, then we have full observability.
-    if partialVisibility:
-        return visibleObjects
-    else:
-        return objects
+      
+    return visibleObjects
 
 def audible(ghosts, state):
     # A ghost is audible if it is any direction and less than
@@ -374,70 +316,3 @@ def union(a, b):
     # From https://www.saltycrane.com/blog/2008/01/how-to-find-intersection-and-union-of/
     #
     return list(set(a) | set(b))
-
-def selectNewMove(direction, legal):
-    # This function is called if Pacman isn't moving in the specified
-    # direction. Need to pick another legal action.
-
-    # Pick with 50% probability between the two perpendicular
-    # possibilities.
-    sample = random()
-    if sample <= 0.3:
-        left = True
-    else:
-        left = False
-
-    # If chosen direction is North, then pick between West (left) and
-    # East. If these moves are legal, make them, otherwise don't move.
-    if direction == Directions.NORTH:
-        if left:
-            if Directions.WEST in legal:
-                return Directions.WEST
-            else:
-                return Directions.STOP
-        else:
-              if Directions.EAST in legal:
-                return Directions.EAST
-              else:
-                return Directions.STOP
-
-    # If chosen direction is EAST
-    if direction == Directions.EAST:
-        if left:
-            if Directions.NORTH in legal:
-                return Directions.NORTH
-            else:
-                return Directions.STOP
-        else:
-              if Directions.SOUTH in legal:
-                return Directions.SOUTH
-              else:
-                return Directions.STOP
-
-    # If chosen direction is SOUTH
-    if direction == Directions.SOUTH:
-        if left:
-            if Directions.EAST in legal:
-                return Directions.EAST
-            else:
-                return Directions.STOP
-        else:
-              if Directions.WEST in legal:
-                return Directions.WEST
-              else:
-                return Directions.STOP
-  
-    # If chosen direction is WEST
-    if direction == Directions.WEST:
-        if left:
-            if Directions.SOUTH in legal:
-                return Directions.SOUTH
-            else:
-                return Directions.STOP
-        else:
-              if Directions.NORTH in legal:
-                return Directions.NORTH
-              else:
-                return Directions.STOP
-
-    print "Why am I here?"
