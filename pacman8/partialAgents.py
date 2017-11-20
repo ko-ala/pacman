@@ -36,6 +36,7 @@ import game
 import util
 from copy import copy, deepcopy
 from random import *
+from math import *
 
 class SimpleMDPAgent(Agent):
 
@@ -58,8 +59,8 @@ class SimpleMDPAgent(Agent):
         self.legal = []
         self.pacman = ()
         self.ghosts = []
-        self.discount = .4
-        self.threshold = 0.0001
+        self.discount = .6
+        self.threshold = 0.000001
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
     def initialize(self, state):
@@ -115,28 +116,49 @@ class SimpleMDPAgent(Agent):
         return (newX, newY)
 
     def updateMap(self,state):
+        #print "updateMap"
+        reward = deepcopy(self.reward)
+        '''
         # get location of all visible food
         foods = api.food(state)
         #get location of all visible capsules
         capsules = api.capsules(state)
+        '''
+        ghosts = api.ghostStatesWithTimes(state)
+        '''
         #get location of all visible walls
         walls = api.walls(state)
         #now add in all the information pacman knows initially. starting with all known locations of food
         for food in foods:
             #use "F" to mark food on the map
-            self.reward[food[0]][food[1]] = 10
+            reward[food[0]][food[1]] = 10
         #now mark the location of capsules on the map, this time using "C"
         for capsule in capsules:
-            self.reward[capsule[0]][capsule[1]] = 5
+            reward[capsule[0]][capsule[1]] = 5
+        '''
+        for ghost in ghosts:
+            ghostX = int(ghost[0][0])
+            ghostY = int(ghost[0][1])
+            if(ghost[1] > 0):
+                reward[ghostX][ghostY] = reward[ghostX][ghostY]  + 11
+                if(ghostX == ghost[0][0] and ghostY == ghost[0][1]):
+                    reward[ghostX + 1][ghostY + 1] = reward[ghostX][ghostY]  + 10
+            else:
+                reward = self.markGhost(state, reward)
+                #need to change reward of adjacent squares as well
+                #reward[ghostX][ghostY] = reward[ghostX][ghostY] - 10
+        '''
         #now mark the location of the walls on the map, using "W"
         for wall in walls:
             self.reward[wall[0]][wall[1]] = "W"
             self.utility[wall[0]][wall[1]] = "W"
+        '''
+        return reward
 
-    def markGhosts(self, state):
+    def markGhost(state, reward):
+        
 
-
-    def bellman(self, state):
+    def bellman(self, state, reward):
 
         width = len(self.utility)
         height = len(self.utility[0])
@@ -145,6 +167,7 @@ class SimpleMDPAgent(Agent):
         while(minDif > self.threshold and count < 100000):
             newUtility = deepcopy(self.utility)
             #for every grid in the map
+            maxDif = -10000
             for y in range(0, height):
                 for x in range(0, width):
                     if newUtility[x][y] != "W":
@@ -177,16 +200,29 @@ class SimpleMDPAgent(Agent):
                                 #scores[i] = adjUtility
                                 scores.append(adjUtility)
 
-                        newUtility[x][y] = self.reward[x][y] + (self.discount * max(scores))
+                        newUtility[x][y] = reward[x][y] + (self.discount * max(scores))
                         dif = abs(newUtility[x][y] - self.utility[x][y])
-                        if minDif >= dif:
-                            minDif = dif
+                        '''
+                        print "maxDif"
+                        print maxDif
+                        print "dif"
+                        print dif
+                        '''
+                        if dif > maxDif:
+                            maxDif = dif
+            if minDif >= maxDif:
+                minDif = maxDif
+            '''
+            print "minDif"
+            print minDif
+            '''
             count = count + 1
             self.utility = newUtility
+        print count
 
     def getMove(self,state):
         #print "getmove"
-        max = -10000000
+        maxScore = -10000000
         move = None
         for i in range(len(self.possibleMoves)):
             direction = self.possibleMoves[i][1]
@@ -194,10 +230,14 @@ class SimpleMDPAgent(Agent):
                 deltaPosition = self.possibleMoves[i][0]
                 nextPosition = self.sumPair(self.pacman, deltaPosition)
                 positionScore = self.utility[nextPosition[0]][nextPosition[1]]
-                if max < positionScore:
-                    max = positionScore
+                if maxScore < positionScore:
+                    maxScore = positionScore
                     move = direction
-
+        if self.utility[self.pacman[0]][self.pacman[1]] > maxScore:
+            print "dont move"
+            return api.makeMove(Directions.STOP, self.legal)
+        print self.pacman
+        print move
         return api.makeMove(move, self.legal)
 
     def getAction(self, state):
@@ -214,14 +254,20 @@ class SimpleMDPAgent(Agent):
         #    else:
                 self.reward[self.pacman[0]][self.pacman[1]] = -1
 
-        reward = deepcopy(self.reward)
+        reward = self.updateMap(state)
 
-        if self.ghosts:
-            reward = self.markGhosts(state)
+        self.bellman(state, reward)
+        '''
+        print ''
+        for row in reward:
+            print row
 
-        self.updateMap(state)
+        '''
 
-        self.bellman(state)
+        print ''
+        for row in self.utility:
+            print row
+
 
         return self.getMove(state)
         return api.makeMove(Directions.STOP, self.legal)

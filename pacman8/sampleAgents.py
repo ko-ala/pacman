@@ -16,7 +16,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -59,7 +59,7 @@ class RandomishAgent(Agent):
     # Create a variable to hold the last action
     def __init__(self):
          self.last = Directions.STOP
-    
+
     def getAction(self, state):
         # Get the actions we can try, and remove "STOP" if that is one of them.
         legal = api.legalActions(state)
@@ -99,6 +99,11 @@ class SensingAgent(Agent):
         for i in range(len(theGhosts)):
             print theGhosts[i]
 
+        print "timer"
+        moreGhosts = api.ghostStatesWithTimes(state)
+        for i in range(len(moreGhosts)):
+            print moreGhosts[i]
+
         # How far away are the ghosts?
         print "Distance to ghosts:"
         for i in range(len(theGhosts)):
@@ -107,7 +112,7 @@ class SensingAgent(Agent):
         # Where are the capsules?
         print "Capsule locations:"
         print api.capsules(state)
-        
+
         # Where is the food?
         print "Food locations: "
         print api.food(state)
@@ -115,7 +120,7 @@ class SensingAgent(Agent):
         # Where are the walls?
         print "Wall locations: "
         print api.walls(state)
-        
+
         # getAction has to return a move. Here we pass "STOP" to the
         # API to ask Pacman to stay where they are.
         return api.makeMove(Directions.STOP, legal)
