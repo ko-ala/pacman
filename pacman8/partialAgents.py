@@ -57,7 +57,8 @@ class SimpleMDPAgent(Agent):
         #list of legal moves for this turn
         self.legal = []
         self.pacman = ()
-        self.discount = .2
+        self.ghosts = []
+        self.discount = .4
         self.threshold = 0.0001
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
@@ -132,11 +133,10 @@ class SimpleMDPAgent(Agent):
             self.reward[wall[0]][wall[1]] = "W"
             self.utility[wall[0]][wall[1]] = "W"
 
+    def markGhosts(self, state):
+
+
     def bellman(self, state):
-        #print "bellman"
-        #print "original utility"
-        #for row in self.utility:
-        #    print row
 
         width = len(self.utility)
         height = len(self.utility[0])
@@ -204,6 +204,7 @@ class SimpleMDPAgent(Agent):
 
         self.pacman = api.whereAmI(state)
         self.legal = api.legalActions(state)
+        self.ghosts = api.ghosts(state)
 
         if not self.init:
             self.initialize(state)
@@ -213,16 +214,14 @@ class SimpleMDPAgent(Agent):
         #    else:
                 self.reward[self.pacman[0]][self.pacman[1]] = -1
 
-        self.updateMap(state)
+        reward = deepcopy(self.reward)
 
-        #print "\nreward"
-        #for row in self.reward:
-        #    print row
+        if self.ghosts:
+            reward = self.markGhosts(state)
+
+        self.updateMap(state)
 
         self.bellman(state)
 
-        #print "utility"
-        #for row in self.utility:
-        #    print row
         return self.getMove(state)
         return api.makeMove(Directions.STOP, self.legal)
