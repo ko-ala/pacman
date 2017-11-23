@@ -59,8 +59,13 @@ class SimpleMDPAgent(Agent):
         self.legal = []
         self.pacman = ()
         self.ghosts = []
-        self.discount = .6
+        self.discount = 1
         self.threshold = 0.000001
+        self.foodReward = 1
+        self.baseReward = -.04
+        self.capsuleReward = -1
+        self.ghostReward = -3
+        self.scaredGhostReward = 2
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
     def initialize(self, state):
@@ -93,16 +98,17 @@ class SimpleMDPAgent(Agent):
                     height = corner[1]
 
             #once the size of the map has been identified, fill it up with "?", as pacman does not know what is in there
-            self.reward = [[-1 for y in range(height+1)] for x in range(width+1)]
-            self.utility = [[random() for y in range(height+1)] for x in range(width+1)]
+            self.reward = [[self.baseReward for y in range(height+1)] for x in range(width+1)]
+            #self.utility = [[random() for y in range(height+1)] for x in range(width+1)]
             #now add in all the information pacman knows initially. starting with all known locations of food
             for food in foods:
                 #use "F" to mark food on the map
-                self.reward[food[0]][food[1]] = 10
+                self.reward[food[0]][food[1]] = self.foodReward
             #now mark the location of capsules on the map, this time using "C"
             for capsule in capsules:
-                self.reward[capsule[0]][capsule[1]] = 5
+                self.reward[capsule[0]][capsule[1]] = self.capsuleReward
             #now mark the location of the walls on the map, using "W"
+            self.utility = deepcopy(self.reward)
             for wall in walls:
                 self.reward[wall[0]][wall[1]] = "W"
                 self.utility[wall[0]][wall[1]] = "W"
@@ -140,13 +146,13 @@ class SimpleMDPAgent(Agent):
             ghostX = int(ghost[0][0])
             ghostY = int(ghost[0][1])
             if(ghost[1] > 0):
-                reward[ghostX][ghostY] = reward[ghostX][ghostY]  + 11
+                reward[ghostX][ghostY] = self.scaredGhostReward
                 if(ghostX == ghost[0][0] and ghostY == ghost[0][1]):
-                    reward[ghostX + 1][ghostY + 1] = reward[ghostX][ghostY]  + 10
+                    reward[ghostX + 1][ghostY + 1] = self.scaredGhostReward
             else:
-                reward = self.markGhost(state, reward)
+                #reward = self.markGhost(state, reward)
                 #need to change reward of adjacent squares as well
-                #reward[ghostX][ghostY] = reward[ghostX][ghostY] - 10
+                reward[ghostX][ghostY] = self.ghostReward
         '''
         #now mark the location of the walls on the map, using "W"
         for wall in walls:
@@ -155,8 +161,8 @@ class SimpleMDPAgent(Agent):
         '''
         return reward
 
-    def markGhost(state, reward):
-        
+    #def markGhost(state, reward):
+
 
     def bellman(self, state, reward):
 
@@ -166,59 +172,62 @@ class SimpleMDPAgent(Agent):
         count = 0
         while(minDif > self.threshold and count < 100000):
             newUtility = deepcopy(self.utility)
-            #for every grid in the map
             maxDif = -10000
             for y in range(0, height):
                 for x in range(0, width):
                     if newUtility[x][y] != "W":
-                        #maxUtility = -1000000
-                        scores = []
-                        #scores = [-100000,-100000,-100000,-100000]
-                        #need to fix
-                        for i in range(len(self.possibleMoves)):
-                            deltaForward = self.possibleMoves[i][0]
-                            deltaLeft = self.possibleMoves[(i+3) % 4][0]
-                            deltaRight = self.possibleMoves[(i+1) % 4][0]
+                        #print (x,y)
+                        if (x == 4 and y ==2):
+                            print (x,y)
+                        elif (x == 4 and y == 3):
+                            print (x,y)
+                        else:
+                            scores = []
+                            #need to fix
+                            for i in range(len(self.possibleMoves)):
+                                deltaForward = self.possibleMoves[i][0]
+                                deltaLeft = self.possibleMoves[(i+3) % 4][0]
+                                deltaRight = self.possibleMoves[(i+1) % 4][0]
+                                '''print ''
+                                print deltaForward
+                                print deltaLeft
+                                print deltaRight
+                                '''
 
-                            nextForward = self.sumPair((x,y), deltaForward)
-                            nextLeft = self.sumPair((x,y), deltaLeft)
-                            nextRight = self.sumPair((x,y), deltaRight)
+                                nextForward = self.sumPair((x,y), deltaForward)
+                                nextLeft = self.sumPair((x,y), deltaLeft)
+                                nextRight = self.sumPair((x,y), deltaRight)
 
-                            forwardUtility = self.utility[nextForward[0]][nextForward[1]]
-                            leftUtility = self.utility[nextLeft[0]][nextLeft[1]]
-                            rightUtility = self.utility[nextRight[0]][nextRight[1]]
+                                forwardUtility = self.utility[nextForward[0]][nextForward[1]]
+                                leftUtility = self.utility[nextLeft[0]][nextLeft[1]]
+                                rightUtility = self.utility[nextRight[0]][nextRight[1]]
 
-                            if forwardUtility != "W":
                                 left = 0.1
                                 forward = 0.8
                                 right = 0.1
+
+                                if forwardUtility == "W":
+                                    forwardUtility = self.utility[x][y]
                                 if leftUtility == "W":
                                     leftUtility = self.utility[x][y]
                                 if rightUtility == "W":
                                     rightUtility = self.utility[x][y]
                                 adjUtility = left*leftUtility + forward*forwardUtility + right*rightUtility
+                                #print adjUtility
                                 #scores[i] = adjUtility
                                 scores.append(adjUtility)
 
-                        newUtility[x][y] = reward[x][y] + (self.discount * max(scores))
-                        dif = abs(newUtility[x][y] - self.utility[x][y])
-                        '''
-                        print "maxDif"
-                        print maxDif
-                        print "dif"
-                        print dif
-                        '''
-                        if dif > maxDif:
-                            maxDif = dif
+                            newUtility[x][y] = reward[x][y] + (self.discount * max(scores))
+                            #this clearly does not work. 0% success
+                            #newUtility[x][y] = reward[x][y]
+                            dif = abs(newUtility[x][y] - self.utility[x][y])
+                            if dif > maxDif:
+                                maxDif = dif
             if minDif >= maxDif:
                 minDif = maxDif
-            '''
-            print "minDif"
-            print minDif
-            '''
             count = count + 1
             self.utility = newUtility
-        print count
+        #print count
 
     def getMove(self,state):
         #print "getmove"
@@ -233,11 +242,11 @@ class SimpleMDPAgent(Agent):
                 if maxScore < positionScore:
                     maxScore = positionScore
                     move = direction
-        if self.utility[self.pacman[0]][self.pacman[1]] > maxScore:
-            print "dont move"
+        if self.utility[self.pacman[0]][self.pacman[1]] >= maxScore:
+            #print "dont move"
             return api.makeMove(Directions.STOP, self.legal)
-        print self.pacman
-        print move
+        #print self.pacman
+        #print move
         return api.makeMove(move, self.legal)
 
     def getAction(self, state):
@@ -252,22 +261,21 @@ class SimpleMDPAgent(Agent):
         #    if self.reward[self.pacman[0]][self.pacman[1]] < 10:
         #        self.reward[self.pacman[0]][self.pacman[1]] = self.reward[self.pacman[0]][self.pacman[1]] - 1
         #    else:
-                self.reward[self.pacman[0]][self.pacman[1]] = -1
+                self.reward[self.pacman[0]][self.pacman[1]] = self.baseReward
 
         reward = self.updateMap(state)
 
         self.bellman(state, reward)
-        '''
+
+
         print ''
         for row in reward:
             print row
-
-        '''
 
         print ''
         for row in self.utility:
             print row
 
 
-        return self.getMove(state)
+        #return self.getMove(state)
         return api.makeMove(Directions.STOP, self.legal)
