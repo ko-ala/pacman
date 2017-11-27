@@ -59,12 +59,16 @@ class MDPAgent(Agent):
         self.legal = []
         #pacmans current position`
         self.pacman = ()
+        #list of scared ghosts
+        self.scaredGhosts = []
         #list of ghost positions
         self.ghosts = []
+        #list of positions adjacent to ghosts
+        self.adjGhosts = []
         #defines the discount factor
-        self.discount = .6
+        self.discount = 0.3
         #defines the threshold for the bellman euation
-        self.threshold = 0.0001
+        self.threshold = 0.01
         #reward for food
         self.foodReward = 2
         #reward for an empty grid
@@ -72,9 +76,9 @@ class MDPAgent(Agent):
         #reward for capsules
         self.capsuleReward = 1
         #reward for a regular ghost
-        self.ghostReward = -10
+        self.ghostReward = -20
         #reward for a scared ghost
-        self.scaredGhostReward = 7
+        self.scaredGhostReward = 5
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
     def initialize(self, state):
@@ -136,124 +140,148 @@ class MDPAgent(Agent):
         newY = pair1[1] + pair2[1]
         return (newX, newY)
 
-    def updateMap(self,state):
-        #print "updateMap"
-        reward = deepcopy(self.reward)
-        ghosts = api.ghostStatesWithTimes(state)
-        for ghost in ghosts:
-            ghostX = int(ghost[0][0])
-            ghostY = int(ghost[0][1])
-            if(ghost[1] > 0):
-                reward[ghostX][ghostY] = self.scaredGhostReward
-                if(ghostX == ghost[0][0] and ghostY == ghost[0][1]):
-                    reward[ghostX + 1][ghostY + 1] = self.scaredGhostReward
+    def findGhosts(self, state):
+        ghostStates = api.ghostStatesWithTimes(state)
+        self.scaredGhosts = []
+        self.ghosts = []
+        self.adjGhosts = []
+
+        for ghostStates in ghostStates:
+            if ghostStates[1] > 0:
+                self.scaredGhosts.append(ghostStates[0])
             else:
-                #reward = self.markGhost(state, reward)
-                #need to change reward of adjacent squares as well
-                reward[ghostX][ghostY] = self.ghostReward
+                self.ghosts.append(ghostStates[0])
+            for ghost in self.ghosts:
                 for move in self.possibleMoves:
-                    adjPosition = self.sumPair((ghostX, ghostY), move[0])
-                    if not self.reward[adjPosition[0]][adjPosition[1]] == "W":
-                        reward[adjPosition[0]][adjPosition[1]] = self.ghostReward/2
-        return reward
+                    self.adjGhosts.append(self.sumPair(ghost, move[0]))
 
-    #def markGhost(state, reward):
+    def calcAdjUtility(self, x, y):
+        #list to store calculated utilities in
+        scores = []
+        #for each adjacent square
+        for i in range(len(self.possibleMoves)):
+            #get the change in position to target adjacent square
+            deltaForward = self.possibleMoves[i][0]
+            #get change in position to left adjacent square. Needed due to noise
+            deltaLeft = self.possibleMoves[(i+3) % 4][0]
+            #get change in position to right adjacent square
+            deltaRight = self.possibleMoves[(i+1) % 4][0]
 
+            #get the positions of the three adjacent squares
+            nextForward = self.sumPair((x,y), deltaForward)
+            nextLeft = self.sumPair((x,y), deltaLeft)
+            nextRight = self.sumPair((x,y), deltaRight)
 
-    def bellman(self, state, reward):
+            #retrieve utilities of each adjacent square by querying approriate position in utilities map
+            forwardUtility = self.utility[nextForward[0]][nextForward[1]]
+            leftUtility = self.utility[nextLeft[0]][nextLeft[1]]
+            rightUtility = self.utility[nextRight[0]][nextRight[1]]
 
+            #the weights of each utility
+            left = 0.1
+            forward = 0.8
+            right = 0.1
+
+            #if any of the adjacent positions are walls, consider the utility of the current pos instead
+            if forwardUtility == "W":
+                forwardUtility = self.utility[x][y]
+            if leftUtility == "W":
+                leftUtility = self.utility[x][y]
+            if rightUtility == "W":
+                rightUtility = self.utility[x][y]
+
+            #calculate the utility of the target position
+            adjUtility = left*leftUtility + forward*forwardUtility + right*rightUtility
+
+            #append the utility to scores
+            scores.append(adjUtility)
+        return scores
+
+    #this function interates through the Bellman Equation
+    def bellman(self, state):
+        #width and height of the environment
         width = len(self.utility)
         height = len(self.utility[0])
-        minDif = 10000
+        #the maximum difference between interations, initialized with a large value
+        maxDif = self.utility
+        #number of interations done
         count = 0
-        while(minDif > self.threshold and count < 100000):
+        #While the iterations have not reached below the threshold or looped more than 100 times
+        while(maxDif > self.threshold and count < 100):
+            #create a new copy of utility to overwrite
             newUtility = deepcopy(self.utility)
-            maxDif = -10000
+            #the difference for an iteration
+            #minDif = -10000
+            #loop through every position in the map
             for y in range(0, height):
                 for x in range(0, width):
+                    #if the position doesnt contain a wall, calculate the utility
                     if newUtility[x][y] != "W":
-                        scores = []
-                        #need to fix
-                        for i in range(len(self.possibleMoves)):
-                            deltaForward = self.possibleMoves[i][0]
-                            deltaLeft = self.possibleMoves[(i+3) % 4][0]
-                            deltaRight = self.possibleMoves[(i+1) % 4][0]
+                        scores = self.calcAdjUtility(x,y)
+                        #print scores
+                        #set the reward to the approriate value from self.reward
+                        reward = self.reward[x][y]
+                        #if the position is adjacent to a ghost or is a ghost, adjust reward approriately
+                        if (x,y) in self.ghosts:
+                            reward = self.ghostReward
+                        elif (x,y) in self.adjGhosts:
+                            reward = self.ghostReward/2
+                        elif (x,y) in self.scaredGhosts:
+                            reward = self.scaredGhostReward
 
-                            nextForward = self.sumPair((x,y), deltaForward)
-                            nextLeft = self.sumPair((x,y), deltaLeft)
-                            nextRight = self.sumPair((x,y), deltaRight)
+                        #calculate the utility with the apporpriate values
+                        newUtility[x][y] = reward + (self.discount * max(scores))
 
-                            forwardUtility = self.utility[nextForward[0]][nextForward[1]]
-                            leftUtility = self.utility[nextLeft[0]][nextLeft[1]]
-                            rightUtility = self.utility[nextRight[0]][nextRight[1]]
+                        #get the difference between the utility of the last iteration and current iteration
+                        dif = abs(newUtility[x][y] - self.utility[x][y])
 
-                            left = 0.1
-                            forward = 0.8
-                            right = 0.1
-
-                            if forwardUtility == "W":
-                                forwardUtility = self.utility[x][y]
-                            if leftUtility == "W":
-                                leftUtility = self.utility[x][y]
-                            if rightUtility == "W":
-                                rightUtility = self.utility[x][y]
-                            adjUtility = left*leftUtility + forward*forwardUtility + right*rightUtility
-
-                            scores.append(adjUtility)
-
-                            newUtility[x][y] = reward[x][y] + (self.discount * max(scores))
-
-                            dif = abs(newUtility[x][y] - self.utility[x][y])
+                        #if the difference is greater than the greatest difference of this iteration, replace it
                         if dif > maxDif:
                             maxDif = dif
+            '''
+            #if the difference of this iteration
             if minDif >= maxDif:
                 minDif = maxDif
+            '''
             count = count + 1
 
             self.utility = newUtility
 
-
+    #decide the move pacman should make
     def getMove(self,state):
         #print "getmove"
-        maxScore = -10000000
-        move = None
-        for i in range(len(self.possibleMoves)):
-            direction = self.possibleMoves[i][1]
-            if direction in self.legal:
-                deltaPosition = self.possibleMoves[i][0]
-                nextPosition = self.sumPair(self.pacman, deltaPosition)
-                positionScore = self.utility[nextPosition[0]][nextPosition[1]]
-                if maxScore < positionScore:
-                    maxScore = positionScore
-                    move = direction
-        if self.utility[self.pacman[0]][self.pacman[1]] >= maxScore:
-            print "dont move"
+        #calculate the scores from all possible moves
+        scores = self.calcAdjUtility(self.pacman[0], self.pacman[1])
+        #get the maximum value from calculated utilities
+        maxUtility = max(scores)
+        #get the imdex of the move
+        index = scores.index(maxUtility)
+        #get the direction that orresponds to the highest utility
+        direction = self.possibleMoves[index][1]
+        #if staying still can provide higher utility, then stay still
+        if self.utility[self.pacman[0]][self.pacman[1]] >= maxUtility:
             return api.makeMove(Directions.STOP, self.legal)
-        #print self.pacman
-        #print move
-        return api.makeMove(move, self.legal)
+        #otherwise move in the previously found direction
+        return api.makeMove(direction, self.legal)
 
     def getAction(self, state):
-
+        #set the current location of pacman, legal moves in the internal memory
         self.pacman = api.whereAmI(state)
         self.legal = api.legalActions(state)
-        self.ghosts = api.ghosts(state)
 
+        #if the internal memory hasn't been initialized initialize it
         if not self.init:
             self.initialize(state)
         else:
-        #    if self.reward[self.pacman[0]][self.pacman[1]] < 10:
-        #        self.reward[self.pacman[0]][self.pacman[1]] = self.reward[self.pacman[0]][self.pacman[1]] - 1
-        #    else:
-                self.reward[self.pacman[0]][self.pacman[1]] = self.baseReward
+            #update the reward of the current location to be the base reward
+            self.reward[self.pacman[0]][self.pacman[1]] = self.baseReward
 
-        reward = self.updateMap(state)
-
-        self.bellman(state, reward)
+        #run the Bellman Equation to reflect new state of envrionment
+        self.bellman(state)
 
         '''
         print ''
-        for row in reward:
+        for row in self.reward:
             print row
 
 
@@ -261,7 +289,7 @@ class MDPAgent(Agent):
         for row in self.utility:
             print row
 
-        '''
-
+            '''
+        #get the apporpriate move pacman should make
         return self.getMove(state)
         #return api.makeMove(Directions.STOP, self.legal)
