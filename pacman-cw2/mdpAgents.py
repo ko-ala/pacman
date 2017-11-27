@@ -57,14 +57,23 @@ class MDPAgent(Agent):
         self.possibleMoves = [((-1,0), Directions.WEST), ((0,1),Directions.NORTH), ((1,0), Directions.EAST), ((0,-1),Directions.SOUTH)]
         #list of legal moves for this turn
         self.legal = []
+        #pacmans current position`
         self.pacman = ()
+        #list of ghost positions
         self.ghosts = []
+        #defines the discount factor
         self.discount = .6
+        #defines the threshold for the bellman euation
         self.threshold = 0.0001
-        self.foodReward = 5
+        #reward for food
+        self.foodReward = 2
+        #reward for an empty grid
         self.baseReward = -1
-        self.capsuleReward = 3
+        #reward for capsules
+        self.capsuleReward = 1
+        #reward for a regular ghost
         self.ghostReward = -10
+        #reward for a scared ghost
         self.scaredGhostReward = 7
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
@@ -99,18 +108,19 @@ class MDPAgent(Agent):
                 if corner[1] > height:
                     height = corner[1]
 
-            #once the size of the map has been identified, fill it up with "?", as pacman does not know what is in there
+            #once the size of the map has been identified, initialize the rewards of each position with the approriate value
             self.reward = [[self.baseReward for y in range(height+1)] for x in range(width+1)]
+            #do the same with the utility, however with random values between 0 and 1
             self.utility = [[random() for y in range(height+1)] for x in range(width+1)]
             #now add in all the information pacman knows initially. starting with all known locations of food
             for food in foods:
-                #use "F" to mark food on the map
+                #set the reward of food to the value defined above
                 self.reward[food[0]][food[1]] = self.foodReward
-                self.utility[food[0]][food[1]] = self.foodReward
-            #now mark the location of capsules on the map, this time using "C"
+                #self.utility[food[0]][food[1]] = self.foodReward
+            #set the reward of capsules with the reward defined above
             for capsule in capsules:
                 self.reward[capsule[0]][capsule[1]] = self.capsuleReward
-                self.utility[capsule[0]][capsule[1]] = self.capsuleReward
+                #self.utility[capsule[0]][capsule[1]] = self.capsuleReward
 
             #now mark the location of the walls on the map, using "W"
             for wall in walls:
@@ -120,6 +130,7 @@ class MDPAgent(Agent):
         #set init to true as the map has been initialized
         self.init = True
 
+    #this function sums the value of 2 pairs and returns the new pair
     def sumPair(self, pair1, pair2):
         newX = pair1[0] + pair2[0]
         newY = pair1[1] + pair2[1]
@@ -140,6 +151,10 @@ class MDPAgent(Agent):
                 #reward = self.markGhost(state, reward)
                 #need to change reward of adjacent squares as well
                 reward[ghostX][ghostY] = self.ghostReward
+                for move in self.possibleMoves:
+                    adjPosition = self.sumPair((ghostX, ghostY), move[0])
+                    if not self.reward[adjPosition[0]][adjPosition[1]] == "W":
+                        reward[adjPosition[0]][adjPosition[1]] = self.ghostReward/2
         return reward
 
     #def markGhost(state, reward):
@@ -215,7 +230,7 @@ class MDPAgent(Agent):
             print "dont move"
             return api.makeMove(Directions.STOP, self.legal)
         #print self.pacman
-        print move
+        #print move
         return api.makeMove(move, self.legal)
 
     def getAction(self, state):
@@ -240,6 +255,7 @@ class MDPAgent(Agent):
         print ''
         for row in reward:
             print row
+
 
         print ''
         for row in self.utility:
