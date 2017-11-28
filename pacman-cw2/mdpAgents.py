@@ -66,9 +66,9 @@ class MDPAgent(Agent):
         #list of positions adjacent to ghosts
         self.adjGhosts = []
         #defines the discount factor
-        self.discount = 0.3
+        self.discount = 0.5
         #defines the threshold for the bellman euation
-        self.threshold = 0.01
+        self.threshold = 0.0001
         #reward for food
         self.foodReward = 2
         #reward for an empty grid
@@ -203,7 +203,7 @@ class MDPAgent(Agent):
         width = len(self.utility)
         height = len(self.utility[0])
         #the maximum difference between interations, initialized with a large value
-        maxDif = self.utility
+        maxDif = 1000000
         #number of interations done
         count = 0
         #While the iterations have not reached below the threshold or looped more than 100 times
@@ -211,7 +211,7 @@ class MDPAgent(Agent):
             #create a new copy of utility to overwrite
             newUtility = deepcopy(self.utility)
             #the difference for an iteration
-            #minDif = -10000
+            minDif = -10000
             #loop through every position in the map
             for y in range(0, height):
                 for x in range(0, width):
@@ -236,13 +236,13 @@ class MDPAgent(Agent):
                         dif = abs(newUtility[x][y] - self.utility[x][y])
 
                         #if the difference is greater than the greatest difference of this iteration, replace it
-                        if dif > maxDif:
-                            maxDif = dif
-            '''
+                        if dif > minDif:
+                            minDif = dif
+
             #if the difference of this iteration
             if minDif >= maxDif:
                 minDif = maxDif
-            '''
+
             count = count + 1
 
             self.utility = newUtility
