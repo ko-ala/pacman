@@ -66,7 +66,7 @@ class MDPAgent(Agent):
         #list of positions adjacent to ghosts
         self.adjGhosts = []
         #defines the discount factor
-        self.discount = 0.5
+        self.discount = 0.8
         #defines the threshold for the bellman euation
         self.threshold = 0.0001
         #reward for food
@@ -78,7 +78,7 @@ class MDPAgent(Agent):
         #reward for a regular ghost
         self.ghostReward = -20
         #reward for a scared ghost
-        self.scaredGhostReward = 5
+        self.scaredGhostReward = 3
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
     def initialize(self, state):
@@ -140,20 +140,27 @@ class MDPAgent(Agent):
         newY = pair1[1] + pair2[1]
         return (newX, newY)
 
+    #this function stores the current locaions of the ghosts
     def findGhosts(self, state):
+        #get the current states of the ghosts
         ghostStates = api.ghostStatesWithTimes(state)
+        #reset the lists to empty
         self.scaredGhosts = []
         self.ghosts = []
         self.adjGhosts = []
 
+        #for every ghost add them to the approriate list
         for ghostStates in ghostStates:
+            #if the ghosts are scared
             if ghostStates[1] > 0:
+                #floor and ceiling it?
                 self.scaredGhosts.append(ghostStates[0])
             else:
                 self.ghosts.append(ghostStates[0])
-            for ghost in self.ghosts:
-                for move in self.possibleMoves:
-                    self.adjGhosts.append(self.sumPair(ghost, move[0]))
+                #if the ghosts are scared we want to stay away from the vicinity of the ghost
+                for ghost in self.ghosts:
+                    for move in self.possibleMoves:
+                        self.adjGhosts.append(self.sumPair(ghost, move[0]))
 
     def calcAdjUtility(self, x, y):
         #list to store calculated utilities in
@@ -203,15 +210,15 @@ class MDPAgent(Agent):
         width = len(self.utility)
         height = len(self.utility[0])
         #the maximum difference between interations, initialized with a large value
-        maxDif = 1000000
+        minDif = 1000000
         #number of interations done
         count = 0
         #While the iterations have not reached below the threshold or looped more than 100 times
-        while(maxDif > self.threshold and count < 100):
+        while(minDif > self.threshold and count < 100):
             #create a new copy of utility to overwrite
             newUtility = deepcopy(self.utility)
             #the difference for an iteration
-            minDif = -10000
+            maxDif = -10000
             #loop through every position in the map
             for y in range(0, height):
                 for x in range(0, width):
@@ -230,18 +237,23 @@ class MDPAgent(Agent):
                             reward = self.scaredGhostReward
 
                         #calculate the utility with the apporpriate values
+                        #newUtility[x][y] = reward + (self.discount * min(scores))
                         newUtility[x][y] = reward + (self.discount * max(scores))
+                        #newUtility[x][y] = reward + (self.discount * (min(scores)+max(scores))/2)
+                        #newUtility[x][y] = reward + (self.discount * (.25*min(scores)+.75*max(scores)))
+                        #newUtility[x][y] = reward + (self.discount * (.15*min(scores)+.85*max(scores)))
+                        #newUtility[x][y] = reward + (self.discount * (sum(scores)/((len(scores)))))
+
+
 
                         #get the difference between the utility of the last iteration and current iteration
                         dif = abs(newUtility[x][y] - self.utility[x][y])
+                        if dif > maxDif:
+                            maxDif = dif
 
-                        #if the difference is greater than the greatest difference of this iteration, replace it
-                        if dif > minDif:
-                            minDif = dif
-
-            #if the difference of this iteration
             if minDif >= maxDif:
                 minDif = maxDif
+
 
             count = count + 1
 
@@ -262,6 +274,7 @@ class MDPAgent(Agent):
         if self.utility[self.pacman[0]][self.pacman[1]] >= maxUtility:
             return api.makeMove(Directions.STOP, self.legal)
         #otherwise move in the previously found direction
+        #print direction
         return api.makeMove(direction, self.legal)
 
     def getAction(self, state):
@@ -276,6 +289,7 @@ class MDPAgent(Agent):
             #update the reward of the current location to be the base reward
             self.reward[self.pacman[0]][self.pacman[1]] = self.baseReward
 
+        self.findGhosts(state)
         #run the Bellman Equation to reflect new state of envrionment
         self.bellman(state)
 
