@@ -66,7 +66,7 @@ class MDPAgent(Agent):
         #list of positions adjacent to ghosts
         self.adjGhosts = []
         #defines the discount factor
-        self.discount = 0.8
+        self.discount = 0.6
         #defines the threshold for the bellman euation
         self.threshold = 0.0001
         #reward for food
@@ -199,7 +199,6 @@ class MDPAgent(Agent):
 
             #calculate the utility of the target position
             adjUtility = left*leftUtility + forward*forwardUtility + right*rightUtility
-
             #append the utility to scores
             scores.append(adjUtility)
         return scores
@@ -244,13 +243,11 @@ class MDPAgent(Agent):
                         #newUtility[x][y] = reward + (self.discount * (.15*min(scores)+.85*max(scores)))
                         #newUtility[x][y] = reward + (self.discount * (sum(scores)/((len(scores)))))
 
-
-
                         #get the difference between the utility of the last iteration and current iteration
                         dif = abs(newUtility[x][y] - self.utility[x][y])
                         if dif > maxDif:
                             maxDif = dif
-
+            #do i need this?
             if minDif >= maxDif:
                 minDif = maxDif
 
@@ -272,9 +269,12 @@ class MDPAgent(Agent):
         direction = self.possibleMoves[index][1]
         #if staying still can provide higher utility, then stay still
         if self.utility[self.pacman[0]][self.pacman[1]] >= maxUtility:
+            #print "dont move"
             return api.makeMove(Directions.STOP, self.legal)
         #otherwise move in the previously found direction
         #print direction
+        #if direction not in self.legal:
+            #print "wall move"
         return api.makeMove(direction, self.legal)
 
     def getAction(self, state):
@@ -288,22 +288,13 @@ class MDPAgent(Agent):
         else:
             #update the reward of the current location to be the base reward
             self.reward[self.pacman[0]][self.pacman[1]] = self.baseReward
-
+        #find the locations of ghosts to know what locations to avoid
         self.findGhosts(state)
         #run the Bellman Equation to reflect new state of envrionment
         self.bellman(state)
-
-        '''
-        print ''
-        for row in self.reward:
-            print row
-
-
-        print ''
+        #get the apporpriate move pacman should make
+        print ""
         for row in self.utility:
             print row
-
-            '''
-        #get the apporpriate move pacman should make
         return self.getMove(state)
         #return api.makeMove(Directions.STOP, self.legal)
