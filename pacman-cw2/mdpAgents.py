@@ -66,7 +66,7 @@ class MDPAgent(Agent):
         #list of positions adjacent to ghosts
         self.adjGhosts = []
         #defines the discount factor
-        self.discount = 0.6
+        self.discount = 0.5
         #defines the threshold for the bellman euation
         self.threshold = 0.0001
         #reward for food
@@ -78,7 +78,7 @@ class MDPAgent(Agent):
         #reward for a regular ghost
         self.ghostReward = -20
         #reward for a scared ghost
-        self.scaredGhostReward = 3
+        self.scaredGhostReward = -20
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
     def initialize(self, state):
@@ -216,8 +216,8 @@ class MDPAgent(Agent):
         while(minDif > self.threshold and count < 100):
             #create a new copy of utility to overwrite
             newUtility = deepcopy(self.utility)
-            #the difference for an iteration
-            maxDif = -10000
+            #the largest difference for an iteration
+            iterationDif = -10000
             #loop through every position in the map
             for y in range(0, height):
                 for x in range(0, width):
@@ -245,16 +245,16 @@ class MDPAgent(Agent):
 
                         #get the difference between the utility of the last iteration and current iteration
                         dif = abs(newUtility[x][y] - self.utility[x][y])
-                        if dif > maxDif:
-                            maxDif = dif
-            #do i need this?
-            if minDif >= maxDif:
-                minDif = maxDif
-
+                        if dif > iterationDif:
+                            iterationDif = dif
+            #if the minDif is greater than the iterationDif, set it to iterationDif
+            if minDif >= iterationDif:
+                minDif = iterationDif
 
             count = count + 1
 
             self.utility = newUtility
+        #print count
 
     #decide the move pacman should make
     def getMove(self,state):
@@ -293,8 +293,5 @@ class MDPAgent(Agent):
         #run the Bellman Equation to reflect new state of envrionment
         self.bellman(state)
         #get the apporpriate move pacman should make
-        print ""
-        for row in self.utility:
-            print row
         return self.getMove(state)
         #return api.makeMove(Directions.STOP, self.legal)
