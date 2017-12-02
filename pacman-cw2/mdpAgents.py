@@ -27,7 +27,7 @@
 
 # The agent here is was written by Simon Parsons, based on the code in
 # pacmanAgents.py
-#python pacman.py -n 1000 -p PartialAgent -l mediumClassic --frameTime=0.001
+#python pacman.py -n 1000 -p MDPAgent -l mediumClassic -q
 from pacman import Directions
 from game import Agent
 import api
@@ -66,7 +66,7 @@ class MDPAgent(Agent):
         #list of positions adjacent to ghosts
         self.adjGhosts = []
         #defines the discount factor
-        self.discount = 0.5
+        self.discount = 0.6
         #defines the threshold for the bellman euation
         self.threshold = 0.0001
         #reward for food
@@ -78,7 +78,7 @@ class MDPAgent(Agent):
         #reward for a regular ghost
         self.ghostReward = -20
         #reward for a scared ghost
-        self.scaredGhostReward = -20
+        self.scaredGhostReward = 3
 
     #this function initializes pacman's internal map by constructing it with available knowledge. Also resets its internal values
     def initialize(self, state):
@@ -237,10 +237,10 @@ class MDPAgent(Agent):
 
                         #calculate the utility with the apporpriate values
                         #newUtility[x][y] = reward + (self.discount * min(scores))
-                        newUtility[x][y] = reward + (self.discount * max(scores))
+                        #newUtility[x][y] = reward + (self.discount * max(scores))
                         #newUtility[x][y] = reward + (self.discount * (min(scores)+max(scores))/2)
                         #newUtility[x][y] = reward + (self.discount * (.25*min(scores)+.75*max(scores)))
-                        #newUtility[x][y] = reward + (self.discount * (.15*min(scores)+.85*max(scores)))
+                        newUtility[x][y] = reward + (self.discount * (.15*min(scores)+.85*max(scores)))
                         #newUtility[x][y] = reward + (self.discount * (sum(scores)/((len(scores)))))
 
                         #get the difference between the utility of the last iteration and current iteration
@@ -272,9 +272,6 @@ class MDPAgent(Agent):
             #print "dont move"
             return api.makeMove(Directions.STOP, self.legal)
         #otherwise move in the previously found direction
-        #print direction
-        #if direction not in self.legal:
-            #print "wall move"
         return api.makeMove(direction, self.legal)
 
     def getAction(self, state):
